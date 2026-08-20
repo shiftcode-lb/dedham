@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* Design tokens sourced directly from the Figma file
+   (fileKey oUfia3Xyvwt2JN8fQawUpA, "colors" and "font syles" frames). */
+@theme {
+  --color-turquoise: #2A6E6F;
+  --color-turquoise-dark: #13595b;
+  --color-brown: #885F43;
+  --color-off-white: #F9F7F5;
+  --color-charcoal: #111418;
+  --color-muted: #3f4948;
+  --color-line: #d9dfdf;
+  --color-dark: #0d1316;
+
+  --font-sans: 'Montserrat', Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-off-white);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  h1, h2, h3, h4, p {
+    margin-top: 0;
+    font-family: var(--font-sans);
+  }
+}
