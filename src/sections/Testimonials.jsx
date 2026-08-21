@@ -21,7 +21,7 @@ export default function Testimonials({ home = false }) {
             Client Experiences
           </h2>
 
-          {home && <p className="text-[11px] text-[#777]">What Our Clients Say</p>}
+          {home && <p className="text-[16px] text-[#777]">What Our Clients Say</p>}
         </header>
 
         <div className="grid grid-cols-3 max-[1080px]:grid-cols-2 max-[600px]:grid-cols-1 gap-[22px]">
@@ -42,7 +42,7 @@ export default function Testimonials({ home = false }) {
                   </div>
                 )}
 
-                <p className="text-[13px] text-[#566064] italic flex-1">
+                <p className="text-[15px] font-medium text-[#566064] italic flex-1">
                   “{t.quote}”
                 </p>
 

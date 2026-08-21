@@ -9,20 +9,22 @@ import { contactSchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
 
 const initial = {
-  firstName: '',
-  lastName: '',
+  name: '',
   email: '',
   phone: '',
-  pickup: '',
-  dropoff: '',
-  date: '',
-  time: '',
-  vehicle: 'Luxury Sedan',
-  requests: '',
+  serviceType: 'Point to Point Transportation',
+  pickupTown: '',
+  dropoffTown: '',
+  passengers: '1',
+  suitcases: '0',
+  carType: 'Luxury Sedan (Up to 3 passengers)',
+  pickupDate: '',
+  pickupHour: '',
+  returnFlightNumber: '',
 };
 
 const inputClasses =
-  'w-full border border-[#cfd6da] bg-white text-[#596166] px-3 outline-none text-[11px] h-[39px] max-[600px]:h-[42px] focus:border-[#42b0aa] transition-colors';
+  'w-full border border-slate-300 bg-white text-slate-700 px-3 py-2 rounded-md outline-none text-xs sm:text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all';
 
 export default function Contact() {
   const [form, setForm] = useState(initial);
@@ -50,18 +52,19 @@ export default function Contact() {
     setMessage('');
 
     const templateParameters = {
-      first_name: form.firstName,
-      last_name: form.lastName,
-      customer_name: `${form.firstName} ${form.lastName}`,
+      customer_name: form.name,
       customer_email: form.email,
       reply_to: form.email,
       phone: form.phone,
-      pickup: form.pickup,
-      dropoff: form.dropoff,
-      date: form.date,
-      time: form.time,
-      vehicle: form.vehicle,
-      requests: form.requests || 'No special requests provided.',
+      service_type: form.serviceType,
+      pickup_town: form.pickupTown,
+      dropoff_town: form.dropoffTown,
+      passengers: form.passengers,
+      suitcases: form.suitcases,
+      car_type: form.carType,
+      pickup_date: form.pickupDate,
+      pickup_hour: form.pickupHour,
+      return_flight_number: form.returnFlightNumber || 'N/A',
     };
 
     try {
@@ -75,9 +78,7 @@ export default function Contact() {
       );
 
       setStatus('success');
-      setMessage(
-        'Thank you. Your ride request has been sent successfully.',
-      );
+      setMessage('Thank you. Your ride request has been sent successfully.');
       setForm(initial);
     } catch (error) {
       console.error('EmailJS error:', error);
@@ -91,86 +92,77 @@ export default function Contact() {
 
   return (
     <section
-      className="min-h-[870px] max-[600px]:min-h-0 bg-cover bg-[center_55%] max-[600px]:bg-[58%_center] flex items-center py-[58px]"
+      className="min-h-[870px] bg-cover bg-[center_55%] flex items-center py-12 sm:py-16"
       style={{
         backgroundImage: `linear-gradient(
           90deg,
-          rgba(3, 18, 22, 0.80),
-          rgba(3, 18, 22, 0.36)
+          rgba(3, 18, 22, 0.85),
+          rgba(3, 18, 22, 0.45)
         ), url(${bg})`,
       }}
     >
       <SchemaMarkup schema={contactSchema} />
 
       <div
-        className={`${SITE_CONTAINER} grid grid-cols-[.92fr_1.08fr] max-[1080px]:grid-cols-1 gap-[76px] max-[1024px]:gap-10 max-[600px]:gap-[30px] items-center`}
+        className={`${SITE_CONTAINER} grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-center`}
       >
-        <div className="text-white pl-2 max-[1080px]:pl-0">
-          <h1 className="text-[52px] max-[600px]:text-[40px] tracking-[-0.045em] mb-[18px]">
+        {/* Left Side Content */}
+        <div className="text-white">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 leading-tight">
             Book Your Ride
           </h1>
 
-          <p className="text-[14px] max-[600px]:text-[12px] text-white/88 max-w-[470px]">
+          <p className="text-sm sm:text-base text-slate-200 max-w-lg mb-8 leading-relaxed">
             Experience the pinnacle of reliable, sophisticated transportation.
             Whether for corporate travel, airport transfers, or a special
             evening, our premium fleet and professional chauffeurs await.
           </p>
 
-          <div className="border-t border-white/20 mt-7 pt-[14px] grid gap-3">
+          <div className="border-t border-white/20 pt-6 space-y-4">
             <a
-              className="flex gap-[9px] items-center text-[11px] text-[#e3e9e9] [&_svg]:text-[#42b0aa]"
+              className="flex items-center gap-3 text-sm font-medium text-slate-200 hover:text-teal-400 transition-colors"
               href="tel:+17817778033"
             >
-              <Phone size={15} />
+              <Phone size={18} className="text-teal-400 shrink-0" />
               781-777-8033
             </a>
 
             <a
-              className="flex gap-[9px] items-center text-[11px] text-[#e3e9e9] [&_svg]:text-[#42b0aa]"
+              className="flex items-center gap-3 text-sm font-medium text-slate-200 hover:text-teal-400 transition-colors"
               href="mailto:dedhamairporttaxi@gmail.com"
             >
-              <Mail size={15} />
+              <Mail size={18} className="text-teal-400 shrink-0" />
               dedhamairporttaxi@gmail.com
             </a>
 
-            <span className="flex gap-[9px] items-center text-[11px] text-[#e3e9e9] [&_svg]:text-[#42b0aa]">
-              <MapPin size={15} />
+            <span className="flex items-center gap-3 text-sm font-medium text-slate-200">
+              <MapPin size={18} className="text-teal-400 shrink-0" />
               Boston Metro Area &amp; Logan Airport
             </span>
           </div>
         </div>
 
+        {/* Right Side Form */}
         <form
-          className="bg-[#f5f7fb] rounded-md p-9 max-[1024px]:p-8 max-[600px]:p-[26px_20px] shadow-[0_20px_55px_rgba(0,0,0,0.18)] max-[1080px]:max-w-[680px] max-[1080px]:w-full max-[1080px]:mx-auto"
+          className="bg-white rounded-xl p-6 sm:p-8 shadow-2xl border border-slate-100 max-w-xl w-full mx-auto"
           onSubmit={submit}
         >
+          {/* Section 1 */}
           <FormSection title="01 Passenger Info">
-            <div className="grid grid-cols-2 max-[600px]:grid-cols-1 gap-[11px]">
-              <Field label="FIRST NAME">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Field label="FULL NAME" required>
                 <input
                   className={inputClasses}
                   required
-                  name="firstName"
-                  value={form.firstName}
+                  name="name"
+                  value={form.name}
                   onChange={update}
-                  placeholder="John"
-                  autoComplete="given-name"
+                  placeholder="John Doe"
+                  autoComplete="name"
                 />
               </Field>
 
-              <Field label="LAST NAME">
-                <input
-                  className={inputClasses}
-                  required
-                  name="lastName"
-                  value={form.lastName}
-                  onChange={update}
-                  placeholder="Doe"
-                  autoComplete="family-name"
-                />
-              </Field>
-
-              <Field label="EMAIL">
+              <Field label="EMAIL ADDRESS" required>
                 <input
                   className={inputClasses}
                   required
@@ -182,8 +174,10 @@ export default function Contact() {
                   autoComplete="email"
                 />
               </Field>
+            </div>
 
-              <Field label="PHONE">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              <Field label="PHONE NUMBER" required>
                 <input
                   className={inputClasses}
                   required
@@ -195,98 +189,148 @@ export default function Contact() {
                   autoComplete="tel"
                 />
               </Field>
+
+              <Field label="SERVICE TYPE" required>
+                <select
+                  className={inputClasses}
+                  name="serviceType"
+                  value={form.serviceType}
+                  onChange={update}
+                >
+                  <option value="Point to Point Transportation">
+                    Point to Point Transportation
+                  </option>
+                  <option value="Night Out">Night Out</option>
+                  <option value="Hourly Limo">Hourly Limo</option>
+                </select>
+              </Field>
             </div>
           </FormSection>
 
+          {/* Section 2 */}
           <FormSection title="02 Trip Details">
-            <Field label="PICK-UP LOCATION">
-              <input
-                className={inputClasses}
-                required
-                name="pickup"
-                value={form.pickup}
-                onChange={update}
-                placeholder="Address or airport"
-                autoComplete="street-address"
-              />
-            </Field>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Field label="PICK-UP TOWN" required>
+                <input
+                  className={inputClasses}
+                  required
+                  name="pickupTown"
+                  value={form.pickupTown}
+                  onChange={update}
+                  placeholder="e.g. Dedham, MA"
+                />
+              </Field>
 
-            <Field label="DROP-OFF LOCATION">
-              <input
-                className={inputClasses}
-                required
-                name="dropoff"
-                value={form.dropoff}
-                onChange={update}
-                placeholder="Address or airport"
-              />
-            </Field>
+              <Field label="DROP-OFF TOWN" required>
+                <input
+                  className={inputClasses}
+                  required
+                  name="dropoffTown"
+                  value={form.dropoffTown}
+                  onChange={update}
+                  placeholder="e.g. Logan Airport"
+                />
+              </Field>
+            </div>
 
-            <div className="grid grid-cols-2 max-[600px]:grid-cols-1 gap-[11px]">
-              <Field label="DATE">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              <Field label="NUMBER OF PASSENGERS" required>
+                <input
+                  className={inputClasses}
+                  required
+                  type="number"
+                  min="1"
+                  max="14"
+                  name="passengers"
+                  value={form.passengers}
+                  onChange={update}
+                />
+              </Field>
+
+              <Field label="NUMBER OF SUITCASES" required>
+                <input
+                  className={inputClasses}
+                  required
+                  type="number"
+                  min="0"
+                  max="10"
+                  name="suitcases"
+                  value={form.suitcases}
+                  onChange={update}
+                />
+              </Field>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 mt-4">
+              <Field label="CAR TYPE" required>
+                <select
+                  className={inputClasses}
+                  name="carType"
+                  value={form.carType}
+                  onChange={update}
+                >
+                  <option value="Luxury Sedan (Up to 3 passengers)">
+                    Luxury Sedan (Up to 3 passengers)
+                  </option>
+                  <option value="Luxury SUV (3-6 passengers)">
+                    Luxury SUV (3-6 passengers)
+                  </option>
+                </select>
+              </Field>
+
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 mt-4">
+
+              <Field label="RETURN FLIGHT NUMBER (OPTIONAL)">
+                <input
+                  className={inputClasses}
+                  name="returnFlightNumber"
+                  value={form.returnFlightNumber}
+                  onChange={update}
+                  placeholder="e.g. AA 1234"
+                />
+              </Field>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              <Field label="PICKUP DATE" required>
                 <input
                   className={inputClasses}
                   required
                   type="date"
-                  name="date"
-                  value={form.date}
+                  name="pickupDate"
+                  value={form.pickupDate}
                   onChange={update}
                 />
               </Field>
 
-              <Field label="TIME">
+              <Field label="PICKUP HOUR" required>
                 <input
                   className={inputClasses}
                   required
                   type="time"
-                  name="time"
-                  value={form.time}
+                  name="pickupHour"
+                  value={form.pickupHour}
                   onChange={update}
                 />
               </Field>
             </div>
-
-            <Field label="VEHICLE PREFERENCE">
-              <select
-                className={inputClasses}
-                name="vehicle"
-                value={form.vehicle}
-                onChange={update}
-              >
-                <option value="Luxury Sedan">Luxury Sedan</option>
-                <option value="Luxury SUV">Luxury SUV</option>
-                <option value="Executive Van">Executive Van</option>
-              </select>
-            </Field>
-          </FormSection>
-
-          <FormSection title="03 Special Requests">
-            <textarea
-              className="w-full border border-[#cfd6da] bg-white text-[#596166] outline-none text-[11px] h-[86px] p-[11px] resize-y focus:border-[#42b0aa] transition-colors"
-              name="requests"
-              value={form.requests}
-              onChange={update}
-              placeholder="Flight number, child seat required, etc."
-            />
           </FormSection>
 
           <button
-            className="w-full h-[38px] border-0 bg-turquoise text-white text-[9px] tracking-[0.04em] cursor-pointer transition-opacity disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs tracking-wider uppercase rounded-md transition-all shadow-md active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 mt-2"
             type="submit"
             disabled={status === 'sending'}
           >
-            {status === 'sending'
-              ? 'SENDING REQUEST...'
-              : 'SUBMIT REQUEST →'}
+            {status === 'sending' ? 'Sending Request...' : 'Submit Request →'}
           </button>
 
           {message && (
             <p
               aria-live="polite"
-              className={`text-center text-[10px] mt-[10px] mb-0 ${
-                status === 'success'
-                  ? 'text-[#176366]'
-                  : 'text-[#b42318]'
+              className={`text-center text-xs font-medium mt-3 ${
+                status === 'success' ? 'text-teal-700' : 'text-red-600'
               }`}
             >
               {message}
@@ -300,23 +344,22 @@ export default function Contact() {
 
 function FormSection({ title, children }) {
   return (
-    <section className="mb-[29px]">
-      <h2 className="text-[18px] max-[600px]:text-[17px] pb-2 border-b border-[#d9dfe2] mb-[13px]">
+    <div className="mb-6">
+      <h2 className="text-sm font-semibold text-slate-800 tracking-wide uppercase border-b border-slate-200 pb-2 mb-4">
         {title}
       </h2>
-
       {children}
-    </section>
+    </div>
   );
 }
 
-function Field({ label, children }) {
+function Field({ label, required, children }) {
   return (
-    <label className="block mb-3">
-      <span className="block text-[7px] tracking-[0.06em] mb-1">
+    <label className="block">
+      <span className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-1">
         {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
       </span>
-
       {children}
     </label>
   );

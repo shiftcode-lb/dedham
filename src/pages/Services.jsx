@@ -69,7 +69,7 @@ export default function Services() {
                 </h1>
 
                 <p
-                  className={`max-w-[560px] max-[600px]:max-w-[480px] mb-[25px] text-[13px] max-[1080px]:text-[12px] max-[600px]:text-[12px] leading-[1.65] font-medium text-white max-[600px]:ml-0 [text-shadow:0_2px_6px_rgba(0,0,0,0.85)] ${
+                  className={`max-w-[560px] max-[600px]:max-w-[480px] mb-[25px] text-[16px] max-[1080px]:text-[12px] max-[600px]:text-[12px] leading-[1.65] font-medium text-white max-[600px]:ml-0 [text-shadow:0_2px_6px_rgba(0,0,0,0.85)] ${
                     alignRight ? 'ml-auto max-[600px]:ml-0' : ''
                   }`}
                 >

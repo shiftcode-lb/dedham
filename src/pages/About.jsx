@@ -27,7 +27,7 @@ export default function About() {
               Service
             </h1>
 
-            <p className="text-[14px] text-[#697174] max-w-[390px] mb-[30px]">
+            <p className="text-[16px] text-[#697174] max-w-[390px] mb-[30px]">
               We offer airport and local transportation services. Experience safe
               and comfortable rides with our professional drivers. Book your ride
               now and take 25% off on your first ride!
@@ -64,13 +64,13 @@ export default function About() {
           </div>
 
           <div>
-            <p className="text-[14px] text-[#4f585c]">
+            <p className="text-[16px] text-[#4f585c]">
               For over a decade, Dedham Livery has set the standard for executive
               transport and reliable airport transfers. We believe that a journey
               should be as calm and structured as the destination.
             </p>
 
-            <p className="text-[14px] text-[#4f585c]">
+            <p className="text-[16px] text-[#4f585c]">
               Our modern corporate aesthetic reflects our operational philosophy:
               minimal friction, high precision, and an unwavering commitment to
               client prestige.
@@ -80,12 +80,12 @@ export default function About() {
           <div className="max-[1080px]:flex max-[1080px]:gap-[35px] max-[600px]:flex-col max-[600px]:gap-0">
             <div className="border-l-2 border-turquoise pl-4 mb-[30px] max-[1080px]:min-w-[160px]">
               <strong className="block text-[35px] text-[#237b7b] leading-none">15+</strong>
-              <span className="text-[10px] tracking-[0.05em]">YEARS OF EXCELLENCE</span>
+              <span className="text-[12px] tracking-[0.05em]">YEARS OF EXCELLENCE</span>
             </div>
 
             <div className="border-l-2 border-turquoise pl-4 mb-[30px] max-[1080px]:min-w-[160px]">
               <strong className="block text-[35px] text-brown leading-none">24/7</strong>
-              <span className="text-[10px] tracking-[0.05em]">CONCIERGE DISPATCH</span>
+              <span className="text-[12px] tracking-[0.05em]">CONCIERGE DISPATCH</span>
             </div>
           </div>
         </div>
