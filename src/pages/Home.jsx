@@ -26,7 +26,7 @@ export default function Home() {
               Service
             </h2>
 
-            <p className="text-[18px] text-charcoal leading-[1.56]">
+            <p className="text-[16px] text-charcoal leading-[1.56]">
               Providing airport and local transportation services, our taxi and
               livery service ensures safe and efficient rides for all customers.
               With a focus on reliability and customer satisfaction, we strive
@@ -36,7 +36,7 @@ export default function Home() {
             <div className="flex items-center border-l-4 border-brown pl-5">
               <strong className="font-bold text-[32px] text-turquoise leading-[1.25] tracking-[-0.32px] whitespace-nowrap">150+</strong>
 
-              <span className="pl-4 text-[16px] text-muted leading-[1.5]">
+              <span className="pl-4 text-[14px] text-muted leading-[1.5]">
                 Reliable service
                 <br />
                 Safe and efficient

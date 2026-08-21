@@ -21,7 +21,7 @@ export default function Safety() {
         >
           <div>
             <h1 className="text-[34px] max-[600px]:text-[30px] text-[#00646a] mb-4">Safety First</h1>
-            <p className="text-[12px] text-[#61696c] max-w-[520px]">
+            <p className="text-[14px] text-[#61696c] max-w-[520px]">
               At Dedham airport taxi & livery, your safety is our top priority. We understand that peace of mind is essential for a relaxing and enjoyable journey. Here's what sets us apart when it comes to safe and reliable transportation. After all, the open road awaits, and we want you to experience it with the confidence of knowing you're in the best hands.
             </p>
           </div>
@@ -48,7 +48,7 @@ export default function Safety() {
                   <Icon size={18} />
                 </span>
                 <h2 className="text-[16px] mb-[10px]">{title}</h2>
-                <p className="text-[10px] text-[#697174]">{text}</p>
+                <p className="text-[12px] text-[#697174]">{text}</p>
               </article>
             );
           })}

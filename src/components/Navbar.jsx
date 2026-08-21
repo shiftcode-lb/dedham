@@ -57,7 +57,7 @@ export default function Navbar() {
               key={to}
               to={to}
               end={to === '/'}
-              className="relative h-full flex items-center text-[11px] tracking-[0.08em] text-[#394246] after:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-[2px] after:bg-turquoise after:scale-x-0 after:transition-transform after:duration-200 [&.active]:text-turquoise-dark [&.active]:after:scale-x-100"
+              className="relative h-full flex items-center text-[14px] tracking-[0.08em] text-[#394246] after:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-[2px] after:bg-turquoise after:scale-x-0 after:transition-transform after:duration-200 [&.active]:text-turquoise-dark [&.active]:after:scale-x-100"
             >
               {label}
             </NavLink>
@@ -65,7 +65,7 @@ export default function Navbar() {
         </nav>
 
         <Link
-          className="hidden min-[1081px]:inline-flex items-center justify-center bg-turquoise text-white text-[10px] tracking-[0.08em] py-[12px] px-[18px] whitespace-nowrap"
+          className="hidden min-[1081px]:inline-flex items-center justify-center bg-turquoise text-white text-[11px] tracking-[0.08em] py-[12px] px-[18px] whitespace-nowrap"
           to="/contact"
         >
           BOOK NOW

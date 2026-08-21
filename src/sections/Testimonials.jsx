@@ -42,7 +42,7 @@ export default function Testimonials({ home = false }) {
                   </div>
                 )}
 
-                <p className="text-[12px] text-[#566064] italic flex-1">
+                <p className="text-[13px] text-[#566064] italic flex-1">
                   “{t.quote}”
                 </p>
 

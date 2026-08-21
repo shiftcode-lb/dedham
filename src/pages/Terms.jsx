@@ -3,19 +3,40 @@ import { termsSchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
 
 const sectionBase =
-  'relative p-[30px_30px_32px] max-[768px]:p-[25px_22px] max-[480px]:p-[22px_18px] mb-[34px] max-[768px]:mb-6 border border-[#18818a] bg-white rounded-xl';
-const sectionDark = 'bg-[#11171a] border-[#11171a] text-white';
+  'relative p-[30px_30px_32px] max-[768px]:p-[25px_22px] max-[480px]:p-[22px_18px] mb-[34px] max-[768px]:mb-6 border rounded-xl';
+
 const h2Base =
-  'relative m-0 mb-3 pl-[18px] font-display text-[18px] max-[768px]:text-[17px] max-[480px]:text-[16px] leading-[1.3] font-bold text-[#20282c] before:content-[\'\'] before:absolute before:left-0 before:top-[1px] before:w-[3px] before:h-[22px] before:bg-turquoise';
-const h2Dark = 'text-white';
-const pBase = 'm-0 mb-[10px] last:mb-0 text-[12px] max-[768px]:text-[11px] leading-[1.7] text-[#596267]';
-const pDark = 'text-white/82';
+  'relative m-0 mb-3 pl-[18px] font-display text-[18px] max-[768px]:text-[17px] max-[480px]:text-[16px] leading-[1.3] font-bold before:content-[\'\'] before:absolute before:left-0 before:top-[1px] before:w-[3px] before:h-[22px] before:bg-turquoise';
+
+const pBase =
+  'm-0 mb-[10px] last:mb-0 text-[14px] max-[768px]:text-[12px] leading-[1.7]';
 
 function TermsSection({ title, dark = false, children }) {
   return (
-    <section className={`${sectionBase} ${dark ? sectionDark : ''}`}>
-      <h2 className={`${h2Base} ${dark ? h2Dark : ''}`}>{title}</h2>
-      {children}
+    <section
+      className={`${sectionBase} ${
+        dark
+          ? 'bg-[#11171a] border-[#11171a] text-white'
+          : 'bg-white border-[#18818a] text-[#20282c]'
+      }`}
+    >
+      <h2
+        className={`${h2Base} ${
+          dark ? 'text-white' : 'text-[#20282c]'
+        }`}
+      >
+        {title}
+      </h2>
+
+      <div
+        className={
+          dark
+            ? '[&_p]:text-white/80'
+            : '[&_p]:text-[#596267]'
+        }
+      >
+        {children}
+      </div>
     </section>
   );
 }
@@ -26,7 +47,7 @@ export default function Terms() {
       <SchemaMarkup schema={termsSchema} />
       <div className={SITE_CONTAINER}>
 
-        <section className="bg-[#11171a] text-white p-[42px_48px] max-[768px]:p-[32px_26px] max-[480px]:p-[27px_20px] mb-12 max-[768px]:mb-8 rounded-xl">
+        <section className="bg-[#2A6E6F] text-white p-[42px_48px] max-[768px]:p-[32px_26px] max-[480px]:p-[27px_20px] mb-12 max-[768px]:mb-8 rounded-xl">
           <h1 className="m-0 mb-3 text-[34px] max-[768px]:text-[28px] max-[480px]:text-[25px] leading-[1.15] font-bold text-white">
             Terms and Policies
           </h1>
@@ -49,7 +70,7 @@ export default function Terms() {
           </p>
         </TermsSection>
 
-        <TermsSection title="Riding with Us">
+        <TermsSection title="Riding with Us" dark>
           <p className={pBase}>
             Your safety is our priority. All our drivers are vetted and
             licensed, and our vehicles are regularly inspected.
@@ -74,7 +95,7 @@ export default function Terms() {
           </p>
         </TermsSection>
 
-        <TermsSection title="Payments">
+        <TermsSection title="Payments" dark>
           <p className={pBase}>
             We believe in transparency, which is why we'll always provide you
             with the estimated price of your ride when we contact you to
@@ -95,7 +116,7 @@ export default function Terms() {
         </TermsSection>
 
         <TermsSection title="Privacy and Security" dark>
-          <p className={`${pBase} ${pDark}`}>
+          <p className={pBase}>
             We take your privacy seriously. Rest assured that any personal
             information you share with us is kept safe and secure. We comply
             with all relevant data protection laws and regulations to

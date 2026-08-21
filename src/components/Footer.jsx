@@ -3,7 +3,7 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 import { SITE_CONTAINER } from '../styles/container';
 
 const linkClasses =
-  'flex gap-2 items-start text-[9px] text-[#c5cecf] my-[7px] no-underline [&.active]:text-[#65b3b0]';
+  'flex gap-2 items-start text-[10px] text-[#c5cecf] my-[7px] no-underline [&.active]:text-[#65b3b0]';
 
 export default function Footer() {
   return (
@@ -14,7 +14,7 @@ export default function Footer() {
         {/* Left section */}
         <div className="justify-self-start">
           <Link
-            className="font-display text-[15px] font-bold text-white inline-block mb-[14px]"
+            className="font-display text-[15px] font-bold text-[#2A6E6F] inline-block mb-[14px]"
             to="/"
           >
             Dedham Airport Taxi &amp; Livery
@@ -25,8 +25,10 @@ export default function Footer() {
             services in Dedham and the Greater Boston area.
           </p>
 
-          <small className="text-[9px] text-[#96a0a3]">
-            © 2024 Dedham Airport Taxi &amp; Livery. All rights reserved.
+          <small className="text-[10px] text-[#96a0a3]">
+            © 2026 Dedham Airport Taxi &amp; Livery.  <a href="https://shiftcode.org" target="_blank" rel="noopener noreferrer" style={{ color: '#65b3b0', textDecoration: 'underline' }}>
+              ShiftCode
+            </a>.
           </small>
         </div>
 
