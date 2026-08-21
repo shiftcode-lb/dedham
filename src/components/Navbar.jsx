@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '../assets/images/dedham-official-logo.jpg';
@@ -16,6 +16,7 @@ const navItems = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const navContainerRef = useRef(null);
 
   useEffect(() => {
     document.body.classList.toggle('menu-open', open);
@@ -23,6 +24,27 @@ export default function Navbar() {
   }, [open]);
 
   useEffect(() => setOpen(false), [location.pathname]);
+
+  // Handle click outside of the header component
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        open &&
+        navContainerRef.current &&
+        !navContainerRef.current.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('touchstart', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('touchstart', handleOutsideClick);
+    };
+  }, [open]);
 
   const handleLogoClick = (event) => {
     setOpen(false);
@@ -33,8 +55,13 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-[100] border-b border-[#e4e8e8] bg-white h-[78px] max-[1080px]:h-[74px] max-[600px]:h-[68px]">
-      <div className={`${SITE_CONTAINER} flex items-center justify-between h-[78px] max-[1080px]:h-[74px] max-[600px]:h-[68px]`}>
+    <header
+      ref={navContainerRef}
+      className="sticky top-0 z-[100] border-b border-[#e4e8e8] bg-white h-[78px] max-[1080px]:h-[74px] max-[600px]:h-[68px]"
+    >
+      <div
+        className={`${SITE_CONTAINER} flex items-center justify-between h-[78px] max-[1080px]:h-[74px] max-[600px]:h-[68px]`}
+      >
         <Link
           className="flex items-center h-full max-w-full overflow-hidden w-[155px] max-[1080px]:w-[145px] max-[768px]:w-[132px] max-[600px]:w-[122px] max-[390px]:w-[114px] max-[360px]:w-[110px]"
           to="/"
@@ -65,7 +92,7 @@ export default function Navbar() {
         </nav>
 
         <Link
-          className="hidden min-[1081px]:inline-flex items-center justify-center bg-turquoise text-white text-[11px] tracking-[0.08em] py-[12px] px-[18px] whitespace-nowrap"
+          className="hidden hover:bg-[#1E5152] min-[1081px]:inline-flex items-center justify-center bg-turquoise text-white text-[11px] font-semibold tracking-[0.08em] py-[12px] px-[18px] rounded-lg whitespace-nowrap"
           to="/contact"
         >
           BOOK NOW
@@ -82,6 +109,16 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Dark Overlay Backdrop */}
+      {open && (
+        <div
+          className="min-[1081px]:hidden fixed inset-0 top-[74px] max-[600px]:top-[68px] bg-black/40 z-[98] transition-opacity"
+          onClick={() => setOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Mobile Drawer */}
       <div
         className={`min-[1081px]:hidden fixed inset-x-0 bg-[rgba(249,247,245,0.99)] transition-transform duration-[250ms] z-[99] top-[74px] max-[600px]:top-[68px] ${
           open ? 'translate-x-0' : 'translate-x-full'
@@ -104,7 +141,7 @@ export default function Navbar() {
             </NavLink>
           ))}
           <Link
-            className="mt-[22px] bg-turquoise text-white text-center text-[11px] py-[13px] block"
+            className="mt-[22px] rounded-lg font-semibold bg-turquoise text-white text-center text-[11px] py-[13px] block"
             to="/contact"
             onClick={() => setOpen(false)}
           >

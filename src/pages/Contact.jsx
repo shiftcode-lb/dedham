@@ -8,13 +8,26 @@ import SchemaMarkup from '../components/SchemaMarkup';
 import { contactSchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
 
+const COUNTRY_CODES = [
+  { code: '+1', country: 'US/CA' },
+  { code: '+44', country: 'UK' },
+  { code: '+61', country: 'AU' },
+  { code: '+33', country: 'FR' },
+  { code: '+49', country: 'DE' },
+  { code: '+971', country: 'UAE' },
+  { code: '+961', country: 'LB' },
+  { code: '+91', country: 'IN' },
+  { code: '+81', country: 'JP' },
+];
+
 const initial = {
   name: '',
   email: '',
+  countryCode: '+1',
   phone: '',
   serviceType: 'Point to Point Transportation',
-  pickupTown: '',
-  dropoffTown: '',
+  pickupLocation: '',
+  dropoffLocation: '',
   passengers: '1',
   suitcases: '0',
   carType: 'Luxury Sedan (Up to 3 passengers)',
@@ -55,10 +68,10 @@ export default function Contact() {
       customer_name: form.name,
       customer_email: form.email,
       reply_to: form.email,
-      phone: form.phone,
+      phone: `${form.countryCode} ${form.phone}`,
       service_type: form.serviceType,
-      pickup_town: form.pickupTown,
-      dropoff_town: form.dropoffTown,
+      pickup_location: form.pickupLocation,
+      dropoff_location: form.dropoffLocation,
       passengers: form.passengers,
       suitcases: form.suitcases,
       car_type: form.carType,
@@ -178,16 +191,31 @@ export default function Contact() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
               <Field label="PHONE NUMBER" required>
-                <input
-                  className={inputClasses}
-                  required
-                  type="tel"
-                  name="phone"
-                  value={form.phone}
-                  onChange={update}
-                  placeholder="(555) 000-0000"
-                  autoComplete="tel"
-                />
+                <div className="flex items-center border border-slate-300 bg-white rounded-md focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500 transition-all overflow-hidden">
+                  <select
+                    className="bg-slate-50 border-r border-slate-200 text-slate-700 px-2 py-2 outline-none text-xs sm:text-sm font-medium cursor-pointer shrink-0 h-full"
+                    name="countryCode"
+                    value={form.countryCode}
+                    onChange={update}
+                  >
+                    {COUNTRY_CODES.map((item) => (
+                      <option key={item.code} value={item.code}>
+                        {item.code} ({item.country})
+                      </option>
+                    ))}
+                  </select>
+
+                  <input
+                    className="w-full bg-transparent text-slate-700 px-3 py-2 outline-none text-xs sm:text-sm"
+                    required
+                    type="tel"
+                    name="phone"
+                    value={form.phone}
+                    onChange={update}
+                    placeholder="(555) 000-0000"
+                    autoComplete="tel"
+                  />
+                </div>
               </Field>
 
               <Field label="SERVICE TYPE" required>
@@ -210,25 +238,25 @@ export default function Contact() {
           {/* Section 2 */}
           <FormSection title="02 Trip Details">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="PICK-UP TOWN" required>
+              <Field label="PICK-UP LOCATION" required>
                 <input
                   className={inputClasses}
                   required
-                  name="pickupTown"
-                  value={form.pickupTown}
+                  name="pickupLocation"
+                  value={form.pickupLocation}
                   onChange={update}
-                  placeholder="e.g. Dedham, MA"
+                  placeholder="Street address, city, or airport"
                 />
               </Field>
 
-              <Field label="DROP-OFF TOWN" required>
+              <Field label="DROP-OFF LOCATION" required>
                 <input
                   className={inputClasses}
                   required
-                  name="dropoffTown"
-                  value={form.dropoffTown}
+                  name="dropoffLocation"
+                  value={form.dropoffLocation}
                   onChange={update}
-                  placeholder="e.g. Logan Airport"
+                  placeholder="Street address, city, or airport"
                 />
               </Field>
             </div>
@@ -261,7 +289,7 @@ export default function Contact() {
               </Field>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
               <Field label="CAR TYPE" required>
                 <select
                   className={inputClasses}
@@ -277,10 +305,6 @@ export default function Contact() {
                   </option>
                 </select>
               </Field>
-
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 mt-4">
 
               <Field label="RETURN FLIGHT NUMBER (OPTIONAL)">
                 <input
@@ -319,7 +343,7 @@ export default function Contact() {
           </FormSection>
 
           <button
-            className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs tracking-wider uppercase rounded-md transition-all shadow-md active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 mt-2"
+            className="w-full py-3 cursor-pointer bg-turquoise hover:bg-[#1E5152] text-white font-semibold text-xs tracking-wider uppercase rounded-md transition-all shadow-md active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 mt-2"
             type="submit"
             disabled={status === 'sending'}
           >
