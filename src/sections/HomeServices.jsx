@@ -9,8 +9,8 @@ export default function HomeServices() {
     <section className="py-20 bg-turquoise">
       <div className={`${SITE_CONTAINER} flex flex-col gap-16 items-center`}>
         <header className="flex flex-col gap-4 items-center text-center">
-          <h2 className="font-semibold text-[32px] text-off-white tracking-[-0.32px]">Dedham Taxi and Livery Service</h2>
-          <p className="max-w-[672px] text-[18px] text-off-white/80 leading-[1.56]">
+          <h2 className="font-semibold text-[32px] text-off-white tracking-[-0.32px]">Dedham Taxi & Livery Service</h2>
+          <p className="max-w-[672px] text-[18px] text-white leading-[1.56]">
             Providing airport and local transportation services for your convenience and comfort.
           </p>
         </header>
@@ -26,8 +26,8 @@ export default function HomeServices() {
                 <span className="w-12 h-12 grid place-items-center bg-turquoise/10 rounded-xl text-turquoise-dark">
                   <Icon size={20} />
                 </span>
-                <h3 className="pt-3 font-semibold text-[24px] text-charcoal leading-[1.33]">{s.shortTitle}</h3>
-                <p className="text-[16px] text-muted leading-[1.5]">{s.homeDescription}</p>
+                <h3 className="pt-3 font-semibold text-[18px] text-charcoal leading-[1.33]">{s.shortTitle}</h3>
+                <p className="text-[14px] font-medium text-[#2C3E50] leading-[1.5]">{s.homeDescription}</p>
               </article>
             );
           })}

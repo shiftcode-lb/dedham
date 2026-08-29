@@ -21,7 +21,7 @@ export default function Testimonials({ home = false }) {
             Client Experiences
           </h2>
 
-          {home && <p className="text-[16px] text-[#777]">What Our Clients Say</p>}
+          {home && <p className="text-[16px] font-medium text-[#2C3E50]">What Our Clients Say</p>}
         </header>
 
         <div className="grid grid-cols-3 max-[1080px]:grid-cols-2 max-[600px]:grid-cols-1 gap-[22px]">
@@ -52,7 +52,7 @@ export default function Testimonials({ home = false }) {
                   </span>
 
                   <div>
-                    <strong className="block text-[10px]">{t.name}</strong>
+                    <strong className="block text-[12px]">{t.name}</strong>
 
                     {t.role && (
                       <small className="block text-[8px] text-[#737b7e]">{t.role}</small>

@@ -14,9 +14,9 @@ export default function ServiceAreas() {
             className="flex items-center gap-[6px] text-[10px] text-[#c4cccc] min-w-0 max-[600px]:gap-1 max-[380px]:text-[8px] [&_svg]:text-[#70b5b3] [&_svg]:flex-none"
             key={city}
           >
-            <MapPin size={10} />
+            <MapPin size={16} />
 
-            <span className="min-w-0 break-words">{city}</span>
+            <span className="min-w-0 break-words font-medium text-sm">{city}</span>
           </div>
         ))}
       </div>

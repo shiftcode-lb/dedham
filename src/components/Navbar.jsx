@@ -103,6 +103,7 @@ export default function Navbar() {
           type="button"
           aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={open}
+          aria-controls="mobile-menu"
           onClick={() => setOpen((value) => !value)}
         >
           {open ? <X size={24} /> : <Menu size={24} />}
@@ -120,10 +121,12 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       <div
+        id="mobile-menu"
+        aria-hidden={!open}
+        inert={!open ? '' : undefined}
         className={`min-[1081px]:hidden fixed inset-x-0 bg-[rgba(249,247,245,0.99)] transition-transform duration-[250ms] z-[99] top-[74px] max-[600px]:top-[68px] ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
-        aria-hidden={!open}
       >
         <nav
           className="flex flex-col p-[28px_26px] max-[768px]:p-[24px_22px] max-[390px]:px-[18px]"

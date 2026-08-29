@@ -19,7 +19,7 @@ export default function LocationCoverage() {
             <div className="flex gap-[9px] py-2 border-b border-white/[.08] [&_svg]:text-[#61b2b0] [&_svg]:flex-none">
               <MapPin size={16} />
               <span>
-                <small className="block text-[#78bbb9] text-[8px] mb-[3px]">MAIN OFFICE</small>
+                <small className="block font-semibold text-[#78bbb9] text-[12px] mb-[3px]">MAIN OFFICE</small>
                 3 Allied Dr Ste 303<br />Dedham, MA 02026
               </span>
             </div>
@@ -30,7 +30,7 @@ export default function LocationCoverage() {
             <div className="flex gap-[9px] py-2 [&_svg]:text-[#61b2b0] [&_svg]:flex-none">
               <Plane size={15} />
               <span>
-                <small className="block text-[#78bbb9] text-[8px] mb-[3px]">PRIMARY HUB</small>
+                <small className="block font-semibold text-[#78bbb9] text-[12px] mb-[3px]">PRIMARY HUB</small>
                 Boston Logan International (BOS)
               </span>
             </div>
@@ -40,7 +40,7 @@ export default function LocationCoverage() {
       </div>
       <div className={`${SITE_CONTAINER} mt-6 flex gap-2 items-center text-[10px] text-[#7ad0c6]`}>
         <Clock3 size={14} />
-        <span>24/7 Service availability</span>
+        <span className='text-sm'>24/7 Service availability</span>
       </div>
     </section>
   );

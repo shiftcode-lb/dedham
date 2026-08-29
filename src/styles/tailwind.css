@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
-/* Design tokens sourced directly from the Figma file
-   (fileKey oUfia3Xyvwt2JN8fQawUpA, "colors" and "font syles" frames). */
 @theme {
   --color-turquoise: #2A6E6F;
   --color-turquoise-dark: #13595b;

@@ -36,7 +36,7 @@ export default function Home() {
             <div className="flex items-center border-l-4 border-brown pl-5">
               <strong className="font-bold text-[32px] text-turquoise leading-[1.25] tracking-[-0.32px] whitespace-nowrap">150+</strong>
 
-              <span className="pl-4 text-[14px] text-muted leading-[1.5]">
+              <span className="pl-4 font-medium text-[14px] text-muted leading-[1.5]">
                 Reliable service
                 <br />
                 Safe and efficient
