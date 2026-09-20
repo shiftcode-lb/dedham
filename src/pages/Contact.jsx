@@ -2,7 +2,7 @@ import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { Mail, MapPin, Phone } from 'lucide-react';
 
-import bg from '../assets/images/real-suburban-airport.png';
+import bg from '../assets/images/real-suburban-airport.webp';
 
 import SchemaMarkup from '../components/SchemaMarkup';
 import { contactSchema } from '../data/schema';

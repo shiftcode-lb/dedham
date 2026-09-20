@@ -1,6 +1,6 @@
-import airportImg from '../assets/images/real-mercedes-chauffeur.png';
-import corporateImg from '../assets/images/real-suburban-evening.png';
-import eventsImg from '../assets/images/real-suburban-airport.png';
+import airportImg from '../assets/images/real-mercedes-chauffeur.webp';
+import corporateImg from '../assets/images/real-suburban-evening.webp';
+import eventsImg from '../assets/images/real-suburban-airport.webp';
 
 export const services = [
   {

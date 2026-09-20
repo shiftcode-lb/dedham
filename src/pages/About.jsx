@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
-import mainImg from '../assets/images/real-mercedes-side.png';
-import detailImg from '../assets/images/real-mercedes-chauffeur.png';
+import mainImg from '../assets/images/real-mercedes-side.webp';
+import detailImg from '../assets/images/real-mercedes-chauffeur.webp';
 
 import Testimonials from '../sections/Testimonials';
 

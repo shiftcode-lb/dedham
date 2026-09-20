@@ -1,4 +1,4 @@
-import logo from '../assets/images/dedham-official-logo.jpg';
+import logo from '../assets/images/dedham-official-logo.webp';
 import { serviceAreas } from './serviceAreas';
 
 const SITE_URL = 'https://dedhamairporttaxi.com';
@@ -15,11 +15,20 @@ function absoluteUrl(path) {
 
 const businessCore = {
   '@type': 'TaxiService',
+  '@id': `${SITE_URL}/#taxi-service`,
+
   name: 'Dedham Airport Taxi & Livery',
+  alternateName: 'Dedham Airport Taxi',
+
+  url: `${SITE_URL}/`,
   image: absoluteUrl(logo),
+
   telephone: '+1-781-777-8033',
   email: 'dedhamairporttaxi@gmail.com',
-  url: SITE_URL,
+
+  description:
+    'Dedham Airport Taxi & Livery provides professional airport transportation, private car service, corporate travel, and local transportation in Dedham, Massachusetts, including service to and from Boston Logan International Airport.',
+
   address: {
     '@type': 'PostalAddress',
     streetAddress: '3 Allied Dr Ste 303',
@@ -28,7 +37,9 @@ const businessCore = {
     postalCode: '02026',
     addressCountry: 'US',
   },
+
   areaServed: serviceAreas,
+
   priceRange: '$$',
 };
 
@@ -65,7 +76,9 @@ export const servicesSchema = {
       name: 'Airport Transfers',
       description:
         'Seamless, punctual transportation to and from all major regional airports, including Logan Airport and TF Green, with flight tracking.',
-      provider: { '@type': 'TaxiService', name: 'Dedham Airport Taxi & Livery' },
+      provider: {
+        '@id': `${SITE_URL}/#taxi-service`
+      },
       areaServed: serviceAreas,
       url: absoluteUrl('/services'),
     },
@@ -75,7 +88,9 @@ export const servicesSchema = {
       name: 'Corporate Travel',
       description:
         'Dedicated executive accounts offering streamlined booking, discreet service, and a mobile-office environment for busy professionals.',
-      provider: { '@type': 'TaxiService', name: 'Dedham Airport Taxi & Livery' },
+      provider: {
+        '@id': `${SITE_URL}/#taxi-service`
+      },
       areaServed: serviceAreas,
       url: absoluteUrl('/services'),
     },
@@ -85,7 +100,9 @@ export const servicesSchema = {
       name: 'Special Events',
       description:
         'Premium fleet transportation for weddings, galas, proms, and nights out in Boston.',
-      provider: { '@type': 'TaxiService', name: 'Dedham Airport Taxi & Livery' },
+      provider: {
+        '@id': `${SITE_URL}/#taxi-service`
+      },
       areaServed: serviceAreas,
       url: absoluteUrl('/services'),
     },

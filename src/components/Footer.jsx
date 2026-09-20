@@ -3,7 +3,7 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 import { SITE_CONTAINER } from '../styles/container';
 
 const linkClasses =
-  'flex gap-2.5 items-center text-sm text-[#c5cecf] hover:text-[#65b3b0] transition-colors no-underline [&.active]:text-[#65b3b0]';
+  'flex gap-2.5 items-center text-sm text-[#d7dfe0] hover:text-[#65b3b0] transition-colors no-underline [&.active]:text-[#65b3b0]';
 
 export default function Footer() {
   return (
@@ -15,25 +15,25 @@ export default function Footer() {
         <div className="justify-self-start flex flex-col justify-between h-full">
           <div>
             <Link
-              className="font-display text-lg font-bold text-[#2A6E6F] inline-block mb-3 hover:opacity-90 transition-opacity"
+              className="font-display text-lg font-bold text-[#6FC4C3] inline-block mb-3 hover:opacity-90 transition-opacity"
               to="/"
             >
               Dedham Airport Taxi &amp; Livery
             </Link>
 
-            <p className="text-xs sm:text-sm leading-relaxed text-[#bcc4c6] max-w-[330px] mb-4">
+            <p className="text-xs sm:text-sm leading-relaxed text-[#d7dfe0] max-w-[330px] mb-4">
               Providing premium, reliable, and professional transportation
               services in Dedham and the Greater Boston area.
             </p>
           </div>
 
-          <p className="text-xs text-[#96a0a3] mt-auto">
+          <p className="text-xs text-[#d7dfe0] mt-auto">
             © 2026 Dedham Airport Taxi &amp; Livery. Developed by{' '}
             <a
               href="https://shiftcode.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#65b3b0] underline hover:opacity-80 transition-opacity"
+              className="text-[#7DD3D0] underline hover:text-white transition-colors"
             >
               ShiftCode
             </a>

@@ -1,5 +1,5 @@
 import { BriefcaseBusiness, CarFront, ShieldCheck } from 'lucide-react';
-import safetyImg from '../assets/images/real-mercedes-side.png';
+import safetyImg from '../assets/images/real-mercedes-side.webp';
 
 import SchemaMarkup from '../components/SchemaMarkup';
 import { safetySchema } from '../data/schema';

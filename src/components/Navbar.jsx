@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import logo from '../assets/images/dedham-official-logo.jpg';
+import logo from '../assets/images/dedham-official-logo.webp';
 import { SITE_CONTAINER } from '../styles/container';
 
 const navItems = [
@@ -72,6 +72,8 @@ export default function Navbar() {
             className="block w-full h-auto object-contain object-left max-h-[64px] max-[1080px]:max-h-[56px] max-[600px]:max-h-[48px]"
             src={logo}
             alt="Dedham Airport Taxi & Livery"
+            width="122"
+            height="45"
           />
         </Link>
 
@@ -120,38 +122,37 @@ export default function Navbar() {
       )}
 
       {/* Mobile Drawer */}
-      <div
-        id="mobile-menu"
-        aria-hidden={!open}
-        inert={!open ? '' : undefined}
-        className={`min-[1081px]:hidden fixed inset-x-0 bg-[rgba(249,247,245,0.99)] transition-transform duration-[250ms] z-[99] top-[74px] max-[600px]:top-[68px] ${
-          open ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
-        <nav
-          className="flex flex-col p-[28px_26px] max-[768px]:p-[24px_22px] max-[390px]:px-[18px]"
-          aria-label="Mobile navigation"
+{open && (
+  <div
+    id="mobile-menu"
+    className="min-[1081px]:hidden fixed inset-x-0 bg-[rgba(249,247,245,0.99)] z-[99] top-[74px] max-[600px]:top-[68px]"
+  >
+    <nav
+      className="flex flex-col p-[28px_26px] max-[768px]:p-[24px_22px] max-[390px]:px-[18px]"
+      aria-label="Mobile navigation"
+    >
+      {navItems.map(([label, to]) => (
+        <NavLink
+          key={to}
+          className="block text-[13px] font-semibold py-[15px] px-1 border-b border-[#dfe4e4] text-center max-[768px]:text-[12px] [&.active]:text-turquoise"
+          to={to}
+          end={to === '/'}
+          onClick={() => setOpen(false)}
         >
-          {navItems.map(([label, to]) => (
-            <NavLink
-              key={to}
-              className="block text-[13px] font-semibold py-[15px] px-1 border-b border-[#dfe4e4] text-center max-[768px]:text-[12px] [&.active]:text-turquoise"
-              to={to}
-              end={to === '/'}
-              onClick={() => setOpen(false)}
-            >
-              {label}
-            </NavLink>
-          ))}
-          <Link
-            className="mt-[22px] rounded-lg font-semibold bg-turquoise text-white text-center text-[11px] py-[13px] block"
-            to="/contact"
-            onClick={() => setOpen(false)}
-          >
-            BOOK NOW
-          </Link>
-        </nav>
-      </div>
+          {label}
+        </NavLink>
+      ))}
+
+      <Link
+        className="mt-[22px] rounded-lg font-semibold bg-turquoise text-white text-center text-[11px] py-[13px] block"
+        to="/contact"
+        onClick={() => setOpen(false)}
+      >
+        BOOK NOW
+      </Link>
+    </nav>
+  </div>
+)}
     </header>
   );
 }

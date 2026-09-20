@@ -3,7 +3,7 @@ import HomeServices from '../sections/HomeServices';
 import LocationCoverage from '../sections/LocationCoverage';
 import Testimonials from '../sections/Testimonials';
 
-import chauffeurImg from '../assets/images/real-mercedes-chauffeur.png';
+import chauffeurImg from '../assets/images/real-mercedes-chauffeur.webp';
 
 import SchemaMarkup from '../components/SchemaMarkup';
 import { homeSchema } from '../data/schema';
