@@ -1,0 +1,31 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Dedham Airport Taxi & Livery",
+    "identifier": "dedhamairporttaxi.com",
+    "documentationUrl": "https://dedhamairporttaxi.com/"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:dedhamairporttaxi.com:page:booking",
+      "displayName": "Book a Ride - Dedham Airport Taxi & Livery",
+      "type": "text/html",
+      "url": "https://dedhamairporttaxi.com/contact",
+      "description": "Online reservation form for airport taxi and car service to and from Boston Logan Airport, serving Dedham, MA and the surrounding Boston area.",
+      "tags": ["taxi", "airport transportation", "car service", "livery", "Dedham", "Logan Airport", "Boston"],
+      "representativeQueries": [
+        "book a taxi from Dedham to Logan Airport",
+        "reserve a car service in Dedham MA",
+        "get a quote for airport transportation to Boston Logan"
+      ]
+    },
+    {
+      "identifier": "urn:air:dedhamairporttaxi.com:page:services",
+      "displayName": "Services - Dedham Airport Taxi & Livery",
+      "type": "text/html",
+      "url": "https://dedhamairporttaxi.com/services",
+      "description": "Overview of transportation services offered, including point-to-point airport transfers, corporate travel, and hourly limo service.",
+      "tags": ["airport transfer", "corporate travel", "limo service"]
+    }
+  ]
+}

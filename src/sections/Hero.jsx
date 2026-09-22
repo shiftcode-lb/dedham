@@ -31,10 +31,10 @@ export default function Hero() {
           Car Service
         </h1>
 
-        <p className="max-w-[672px] text-[24px] max-[600px]:text-[16px] leading-[1.17] text-off-white">
-          Reliable airport transportation from Dedham to Boston Logan Airport,
-          with professional car service for airport transfers, corporate travel,
-          and special occasions.
+        <p className="max-w-[760px] text-[24px] max-[600px]:text-[16px] leading-[1.25] text-off-white">
+          Reliable 24/7 airport transportation between Dedham, MA and Boston
+          Logan International Airport, with professional service for airport
+          transfers, corporate travel, and special occasions.
         </p>
 
         <div className="flex gap-4 items-center pt-4 max-[600px]:flex-col max-[600px]:w-full">
@@ -49,7 +49,7 @@ export default function Hero() {
             className={`${BTN_OUTLINE} max-[600px]:w-full`}
             to="/services"
           >
-            View Our Fleet
+            Explore Our Services
           </Link>
         </div>
       </div>

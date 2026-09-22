@@ -21,16 +21,17 @@ export default function Home() {
         >
           <div className="flex-1 flex flex-col gap-6">
             <h2 className="font-semibold text-[32px] text-turquoise leading-[1.25] tracking-[-0.32px]">
-              Dedham's Most Reliable Livery
+              Reliable Airport Taxi & Livery Service
               <br />
-              Service
+              in Dedham, MA
             </h2>
 
             <p className="text-[16px] text-charcoal leading-[1.56]">
-              Providing airport and local transportation services, our taxi and
-              livery service ensures safe and efficient rides for all customers.
-              With a focus on reliability and customer satisfaction, we strive
-              to exceed expectations.
+              Dedham Airport Taxi & Livery provides reliable airport transportation
+              between Dedham, Boston Logan International Airport, and destinations
+              throughout Greater Boston. Our professional chauffeurs provide
+              comfortable, on-time transportation for airport transfers, local rides,
+              corporate travel, and special events.
             </p>
 
             <div className="flex items-center border-l-4 border-brown pl-5">
@@ -48,7 +49,7 @@ export default function Home() {
             <img
               className="w-full h-full object-cover object-[center_56%]"
               src={chauffeurImg}
-              alt="Professional chauffeur opening a vehicle door"
+              alt="Dedham Airport Taxi professional chauffeur providing airport car service"
             />
           </div>
         </div>
