@@ -1,5 +1,16 @@
 import logo from '../assets/images/dedham-official-logo.webp';
 import { serviceAreas } from './serviceAreas';
+import { faqs } from './faq';
+
+// Fill these in once available — a Google Business Profile URL and any
+// active social profiles — so search engines can confirm this site,
+// the GBP listing, and the social accounts all describe the same
+// business (an "entity" signal that helps local ranking).
+const SAME_AS = [
+  // 'https://www.google.com/maps/place/?q=place_id:YOUR_PLACE_ID',
+  // 'https://www.facebook.com/yourpage',
+  // 'https://www.instagram.com/yourprofile',
+];
 
 const SITE_URL = 'https://dedhamairporttaxi.com';
 
@@ -41,12 +52,43 @@ const businessCore = {
   areaServed: serviceAreas,
 
   priceRange: '$$',
+
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ],
+    opens: '00:00',
+    closes: '23:59',
+  },
+
+  ...(SAME_AS.length > 0 && { sameAs: SAME_AS }),
 };
 
-// Home — primary business identity schema
+// Home — primary business identity, plus the on-page FAQ so the same
+// questions/answers are machine-readable for search engines
 export const homeSchema = {
   '@context': 'https://schema.org',
-  ...businessCore,
+  '@graph': [
+    businessCore,
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    },
+  ],
 };
 
 // About — organization background schema

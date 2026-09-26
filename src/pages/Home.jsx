@@ -2,6 +2,7 @@ import Hero from '../sections/Hero';
 import HomeServices from '../sections/HomeServices';
 import LocationCoverage from '../sections/LocationCoverage';
 import Testimonials from '../sections/Testimonials';
+import FAQ from '../sections/FAQ';
 
 import chauffeurImg from '../assets/images/real-mercedes-chauffeur-small.webp';
 
@@ -66,6 +67,8 @@ export default function Home() {
       <Testimonials home />
 
       <LocationCoverage />
+
+      <FAQ />
     </>
   );
 }
