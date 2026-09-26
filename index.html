@@ -3,10 +3,16 @@
   <head>
     <meta charset="UTF-8" />
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) — GA4 only. The Google Ads remarketing pixel
+         (AW-16623859488) was removed: it had no conversion action configured
+         so it wasn't measuring anything, but it loaded a third-party
+         tracking cookie on every page load, hurting Best Practices and
+         Performance. Re-add it as `gtag('event', 'conversion', {send_to:
+         'AW-16623859488/<LABEL>'})` at an actual conversion moment (booking
+         success, call click) once a conversion action + label exist. -->
     <script
       async
-      src="https://www.googletagmanager.com/gtag/js?id=AW-16623859488"
+      src="https://www.googletagmanager.com/gtag/js?id=G-7VZH8F8PP6"
     ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -15,7 +21,6 @@
       }
       gtag("js", new Date());
 
-      gtag("config", "AW-16623859488");
       gtag("config", "G-7VZH8F8PP6");
     </script>
 
@@ -23,6 +28,18 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0"
+    />
+
+    <!-- Preload the LCP hero image so the browser can fetch it before React
+         renders (this is a client-rendered SPA, so without this the image
+         request wouldn't start until after the JS bundle parses and runs) -->
+    <link
+      rel="preload"
+      as="image"
+      href="/images/hero-1376.webp"
+      imagesrcset="/images/hero-640.webp 640w, /images/hero-1024.webp 1024w, /images/hero-1376.webp 1376w"
+      imagesizes="100vw"
+      fetchpriority="high"
     />
 
    

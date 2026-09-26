@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import logo from '../assets/images/dedham-official-logo.webp';
+import logo from '../assets/images/dedham-official-logo-navbar.webp';
 import { SITE_CONTAINER } from '../styles/container';
 
 const navItems = [

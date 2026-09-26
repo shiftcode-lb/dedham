@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
-import hero from '../assets/images/real-suburban-terminal.webp';
 import { SITE_CONTAINER } from '../styles/container';
 import { BTN_TEAL, BTN_OUTLINE } from '../styles/buttons';
+
+// Served from /public (stable, unhashed path) instead of a Vite-hashed
+// import so index.html can <link rel="preload"> the exact same URL and the
+// browser can start fetching it before React even renders this component.
+const HERO_SRCSET =
+  '/images/hero-640.webp 640w, /images/hero-1024.webp 1024w, /images/hero-1376.webp 1376w';
 
 export default function Hero() {
   return (
@@ -9,7 +14,9 @@ export default function Hero() {
 
       {/* LCP Hero Image */}
       <img
-        src={hero}
+        src="/images/hero-1376.webp"
+        srcSet={HERO_SRCSET}
+        sizes="100vw"
         alt=""
         fetchPriority="high"
         decoding="async"

@@ -12,7 +12,7 @@ function MarqueeTrack() {
       className="flex shrink-0 items-center"
       aria-hidden="true"
     >
-      {Array.from({ length: 6 }).map((_, i) => (
+      {Array.from({ length: 4 }).map((_, i) => (
         <span
           key={i}
           className="mx-6 whitespace-nowrap text-[13px] max-[600px]:text-[12px] font-bold uppercase tracking-[0.06em]"
