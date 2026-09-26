@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { services } from '../data/services';
 
 import SchemaMarkup from '../components/SchemaMarkup';
+import PageMeta from '../components/PageMeta';
 import { servicesSchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
 
@@ -36,7 +37,15 @@ const mobilePositions = [
 export default function Services() {
   return (
     <section className="bg-[#091417]">
+      <PageMeta
+        title="Our Services | Airport Transfers, Corporate Travel & Event Car Service | Dedham Airport Taxi"
+        description="Explore Dedham Airport Taxi & Livery's services: point-to-point airport transfers, corporate travel, and hourly limo service for nights out and special events."
+        path="/services"
+      />
       <SchemaMarkup schema={servicesSchema} />
+      <h1 className="sr-only">
+        Our Services — Airport Transfers, Corporate Travel & Event Car Service
+      </h1>
       {services.map((service, index) => {
         const alignRight = index === 1;
         return (
@@ -64,9 +73,9 @@ export default function Services() {
                   0{index + 1}
                 </span>
 
-                <h1 className="mb-[18px] text-[48px] max-[1080px]:text-[42px] max-[600px]:text-[36px] leading-[1.08] tracking-[-0.04em] text-white whitespace-nowrap max-[600px]:whitespace-normal [text-shadow:0_2px_8px_rgba(0,0,0,0.65)]">
+                <h2 className="mb-[18px] text-[48px] max-[1080px]:text-[42px] max-[600px]:text-[36px] leading-[1.08] tracking-[-0.04em] text-white whitespace-nowrap max-[600px]:whitespace-normal [text-shadow:0_2px_8px_rgba(0,0,0,0.65)]">
                   {customTitles[index]}
-                </h1>
+                </h2>
 
                 <p
                   className={`max-w-[560px] max-[600px]:max-w-[480px] mb-[25px] text-[16px] max-[1080px]:text-[12px] max-[600px]:text-[12px] leading-[1.65] font-medium text-white max-[600px]:ml-0 [text-shadow:0_2px_6px_rgba(0,0,0,0.85)] ${

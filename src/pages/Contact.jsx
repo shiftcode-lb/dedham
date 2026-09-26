@@ -5,6 +5,7 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 import bg from '../assets/images/real-suburban-airport.webp';
 
 import SchemaMarkup from '../components/SchemaMarkup';
+import PageMeta from '../components/PageMeta';
 import { contactSchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
 
@@ -114,6 +115,11 @@ export default function Contact() {
         ), url(${bg})`,
       }}
     >
+      <PageMeta
+        title="Book a Ride | Contact Dedham Airport Taxi & Livery"
+        description="Book your airport taxi or car service in Dedham, MA. Call 781-777-8033 or request a ride online for 24/7 reliable transportation to Boston Logan Airport."
+        path="/contact"
+      />
       <SchemaMarkup schema={contactSchema} />
 
       <div

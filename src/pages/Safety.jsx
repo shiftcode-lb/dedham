@@ -2,6 +2,7 @@ import { BriefcaseBusiness, CarFront, ShieldCheck } from 'lucide-react';
 import safetyImg from '../assets/images/real-mercedes-side.webp';
 
 import SchemaMarkup from '../components/SchemaMarkup';
+import PageMeta from '../components/PageMeta';
 import { safetySchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
 
@@ -14,6 +15,11 @@ const standards = [
 export default function Safety() {
   return (
     <>
+      <PageMeta
+        title="Safety First | Our Commitment to Safe Transportation | Dedham Airport Taxi"
+        description="Discover the vehicle maintenance standards, driver vetting, and safety policies that make Dedham Airport Taxi & Livery a safe choice for airport transportation."
+        path="/safety"
+      />
       <SchemaMarkup schema={safetySchema} />
       <section className="py-[70px] max-[600px]:py-[52px] bg-[#f9faff]">
         <div

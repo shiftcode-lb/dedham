@@ -6,12 +6,18 @@ import Testimonials from '../sections/Testimonials';
 import chauffeurImg from '../assets/images/real-mercedes-chauffeur.webp';
 
 import SchemaMarkup from '../components/SchemaMarkup';
+import PageMeta from '../components/PageMeta';
 import { homeSchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
 
 export default function Home() {
   return (
     <>
+      <PageMeta
+        title="Dedham Airport Taxi & Car Service | Logan Airport Transportation"
+        description="Book reliable Dedham airport taxi and car service to Boston Logan Airport. Professional airport transportation, private rides, corporate travel, and local car service in Dedham, MA."
+        path="/"
+      />
       <SchemaMarkup schema={homeSchema} />
       <Hero />
 

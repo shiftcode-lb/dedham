@@ -6,6 +6,7 @@ import detailImg from '../assets/images/real-mercedes-chauffeur.webp';
 import Testimonials from '../sections/Testimonials';
 
 import SchemaMarkup from '../components/SchemaMarkup';
+import PageMeta from '../components/PageMeta';
 import { aboutSchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
 import { BTN_BROWN } from '../styles/buttons';
@@ -13,6 +14,11 @@ import { BTN_BROWN } from '../styles/buttons';
 export default function About() {
   return (
     <>
+      <PageMeta
+        title="About Us | 15+ Years of Airport Transportation | Dedham Airport Taxi & Livery"
+        description="Learn about Dedham Airport Taxi & Livery — 15+ years providing executive airport transfers, corporate travel, and reliable local car service in Dedham, MA and Greater Boston."
+        path="/about"
+      />
       <SchemaMarkup schema={aboutSchema} />
       <section className="py-[76px] pb-[82px] max-[600px]:py-[55px] bg-[#f8f9fc]">
         <div

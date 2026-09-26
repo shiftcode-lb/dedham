@@ -1,4 +1,5 @@
 import SchemaMarkup from '../components/SchemaMarkup';
+import PageMeta from '../components/PageMeta';
 import { termsSchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
 
@@ -27,6 +28,11 @@ export default function Terms() {
 
   return (
     <main className="py-12 sm:py-16 bg-gray-50 min-h-screen">
+      <PageMeta
+        title="Terms & Conditions | Dedham Airport Taxi & Livery"
+        description="Review the booking, cancellation, payment, and privacy policies for Dedham Airport Taxi & Livery."
+        path="/terms"
+      />
       <SchemaMarkup schema={termsSchema} />
       <div className={SITE_CONTAINER}>
         
