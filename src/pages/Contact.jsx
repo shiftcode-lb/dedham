@@ -8,6 +8,7 @@ import SchemaMarkup from '../components/SchemaMarkup';
 import PageMeta from '../components/PageMeta';
 import { contactSchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
+import { trackEvent } from '../lib/analytics';
 
 const COUNTRY_CODES = [
   { code: '+1', country: 'US/CA' },
@@ -90,6 +91,11 @@ export default function Contact() {
           publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
         },
       );
+
+      trackEvent('generate_lead', {
+        service_type: form.serviceType,
+        car_type: form.carType,
+      });
 
       setStatus('success');
       setMessage('Thank you. Your ride request has been sent successfully.');

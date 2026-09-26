@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import PromoBanner from './components/PromoBanner';
 import Footer from './components/Footer';
+import { trackEvent } from './lib/analytics';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -29,13 +31,11 @@ function ScrollToTop() {
     // Deferred so the new page's own effect (which sets document.title)
     // has already run by the time this reads it, regardless of effect order.
     const timer = setTimeout(() => {
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'page_view', {
-          page_path: pathname,
-          page_location: window.location.href,
-          page_title: document.title,
-        });
-      }
+      trackEvent('page_view', {
+        page_path: pathname,
+        page_location: window.location.href,
+        page_title: document.title,
+      });
     }, 0);
 
     return () => clearTimeout(timer);
@@ -44,11 +44,37 @@ function ScrollToTop() {
   return null;
 }
 
+// Delegated click listener so every tel: link on the site (navbar, footer,
+// contact page, 404 page) reports a call-intent event without each one
+// needing its own onClick handler.
+function CallTracking() {
+  useEffect(() => {
+    const handleClick = (event) => {
+      const link = event.target.closest('a[href^="tel:"]');
+      if (!link) return;
+
+      trackEvent('phone_call_click', {
+        phone_number: link.getAttribute('href').replace('tel:', ''),
+        page_path: window.location.pathname,
+      });
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
+
+  return null;
+}
+
 export default function App() {
   return (
     <>
       <ScrollToTop />
-      <Navbar />
+      <CallTracking />
+      <div className="sticky top-0 z-[100]">
+        <PromoBanner />
+        <Navbar />
+      </div>
       <main>
         <Routes>
           <Route path="/" element={<Home />} />

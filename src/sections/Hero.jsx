@@ -26,10 +26,6 @@ export default function Hero() {
       <div
         className={`${SITE_CONTAINER} relative z-10 flex flex-col items-center gap-6 text-center`}
       >
-        <span className="inline-flex items-center gap-2 rounded-full bg-brown px-4 py-1.5 text-[13px] max-[600px]:text-[11px] font-semibold uppercase tracking-[0.08em] text-off-white shadow-md">
-          Limited Time — 25% Off Your First Ride
-        </span>
-
         <h1 className="font-bold text-[64px] max-[768px]:text-[44px] max-[600px]:text-[38px] max-[380px]:text-[32px] leading-[1.125] max-[600px]:leading-tight tracking-[-0.96px] text-off-white whitespace-nowrap max-[768px]:whitespace-normal">
           Dedham Airport Taxi &<br />
           Car Service

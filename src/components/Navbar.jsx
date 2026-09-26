@@ -57,7 +57,7 @@ export default function Navbar() {
   return (
     <header
       ref={navContainerRef}
-      className="sticky top-0 z-[100] border-b border-[#e4e8e8] bg-white h-[78px] max-[1080px]:h-[74px] max-[600px]:h-[68px]"
+      className="border-b border-[#e4e8e8] bg-white h-[78px] max-[1080px]:h-[74px] max-[600px]:h-[68px]"
     >
       <div
         className={`${SITE_CONTAINER} flex items-center justify-between h-[78px] max-[1080px]:h-[74px] max-[600px]:h-[68px]`}
@@ -115,7 +115,7 @@ export default function Navbar() {
       {/* Dark Overlay Backdrop */}
       {open && (
         <div
-          className="min-[1081px]:hidden fixed inset-0 top-[74px] max-[600px]:top-[68px] bg-black/40 z-[98] transition-opacity"
+          className="min-[1081px]:hidden fixed inset-0 top-[114px] max-[600px]:top-[104px] bg-black/40 z-[98] transition-opacity"
           onClick={() => setOpen(false)}
           aria-hidden="true"
         />
@@ -125,7 +125,7 @@ export default function Navbar() {
 {open && (
   <div
     id="mobile-menu"
-    className="min-[1081px]:hidden fixed inset-x-0 bg-[rgba(249,247,245,0.99)] z-[99] top-[74px] max-[600px]:top-[68px]"
+    className="min-[1081px]:hidden fixed inset-x-0 bg-[rgba(249,247,245,0.99)] z-[99] top-[114px] max-[600px]:top-[104px]"
   >
     <nav
       className="flex flex-col p-[28px_26px] max-[768px]:p-[24px_22px] max-[390px]:px-[18px]"
