@@ -60,6 +60,14 @@ export default function Footer() {
               Services
             </NavLink>
 
+            <NavLink className={linkClasses} to="/service-areas">
+              Service Areas
+            </NavLink>
+
+            <NavLink className={linkClasses} to="/routes">
+              Airport Routes
+            </NavLink>
+
             <NavLink className={linkClasses} to="/contact">
               Contact
             </NavLink>

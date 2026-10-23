@@ -2,14 +2,13 @@ import logo from '../assets/images/dedham-official-logo.webp';
 import { serviceAreas } from './serviceAreas';
 import { faqs } from './faq';
 
-// Fill these in once available — a Google Business Profile URL and any
-// active social profiles — so search engines can confirm this site,
-// the GBP listing, and the social accounts all describe the same
-// business (an "entity" signal that helps local ranking).
+// Google Business Profile listing + active social profiles, so search
+// engines can confirm this site, the GBP listing, and the social accounts
+// all describe the same business (an "entity" signal that helps local
+// ranking).
 const SAME_AS = [
-  // 'https://www.google.com/maps/place/?q=place_id:YOUR_PLACE_ID',
-  // 'https://www.facebook.com/yourpage',
-  // 'https://www.instagram.com/yourprofile',
+  'https://www.google.com/maps/search/?api=1&query=Dedham+Airport+Taxi+%26+Livery+Dedham+MA',
+  'https://www.instagram.com/dedhamairport',
 ];
 
 const SITE_URL = 'https://dedhamairporttaxi.com';
@@ -191,3 +190,43 @@ export const termsSchema = {
   description:
     'Booking, cancellation, payment, and privacy policies for Dedham Airport Taxi & Livery.',
 };
+
+// Town and route landing pages — Service + BreadcrumbList + page FAQ, all
+// tied back to the single TaxiService entity defined on the homepage.
+export function buildLandingSchema(page) {
+  const url = absoluteUrl(page.path);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Service',
+        name: page.service,
+        serviceType: 'Taxi and car service',
+        url,
+        provider: { '@id': `${SITE_URL}/#taxi-service` },
+        areaServed: page.breadcrumbName,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: page.parent.name,
+            item: absoluteUrl(page.parent.path),
+          },
+          { '@type': 'ListItem', position: 3, name: page.breadcrumbName, item: url },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: page.faqs.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+        })),
+      },
+    ],
+  };
+}

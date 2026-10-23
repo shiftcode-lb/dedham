@@ -5,6 +5,7 @@ import PromoBanner from './components/PromoBanner';
 import Footer from './components/Footer';
 import { trackEvent } from './lib/analytics';
 import Home from './pages/Home';
+import { landingPages } from './data/landingPages';
 
 // Every other route is lazy so the homepage's initial JS download doesn't
 // include, e.g., the Contact page's EmailJS client — that bundle is only
@@ -14,6 +15,8 @@ const Services = lazy(() => import('./pages/Services'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Safety = lazy(() => import('./pages/Safety'));
 const Terms = lazy(() => import('./pages/Terms'));
+const LandingPage = lazy(() => import('./pages/LandingPage'));
+const HubPage = lazy(() => import('./pages/HubPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function ScrollToTop() {
@@ -88,6 +91,11 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/safety" element={<Safety />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/service-areas" element={<HubPage path="/service-areas" />} />
+            <Route path="/routes" element={<HubPage path="/routes" />} />
+            {landingPages.map((page) => (
+              <Route key={page.path} path={page.path} element={<LandingPage page={page} />} />
+            ))}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
