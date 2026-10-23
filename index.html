@@ -3,13 +3,11 @@
   <head>
     <meta charset="UTF-8" />
 
-    <!-- Google tag (gtag.js) — GA4 only. The Google Ads remarketing pixel
-         (AW-16623859488) was removed: it had no conversion action configured
-         so it wasn't measuring anything, but it loaded a third-party
-         tracking cookie on every page load, hurting Best Practices and
-         Performance. Re-add it as `gtag('event', 'conversion', {send_to:
-         'AW-16623859488/<LABEL>'})` at an actual conversion moment (booking
-         success, call click) once a conversion action + label exist. -->
+    <!-- Google tag (gtag.js): GA4 + Google Ads. The Ads config below
+         (AW-16623859488) enables gclid capture so the lead and phone-call
+         conversions fired from src/lib/analytics.js (trackAdsConversion)
+         are attributed to the ad click. It was removed earlier while no
+         conversion actions existed; they now do. -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-7VZH8F8PP6"
@@ -22,6 +20,7 @@
       gtag("js", new Date());
 
       gtag("config", "G-7VZH8F8PP6");
+      gtag("config", "AW-16623859488");
     </script>
 
     <!-- Responsive -->

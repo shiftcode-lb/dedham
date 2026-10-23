@@ -8,7 +8,7 @@ import SchemaMarkup from '../components/SchemaMarkup';
 import PageMeta from '../components/PageMeta';
 import { contactSchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
-import { trackEvent } from '../lib/analytics';
+import { trackAdsConversion, trackEvent } from '../lib/analytics';
 
 const COUNTRY_CODES = [
   { code: '+1', country: 'US/CA' },
@@ -96,6 +96,7 @@ export default function Contact() {
         service_type: form.serviceType,
         car_type: form.carType,
       });
+      trackAdsConversion('lead');
 
       setStatus('success');
       setMessage('Thank you. Your ride request has been sent successfully.');

@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import PromoBanner from './components/PromoBanner';
 import Footer from './components/Footer';
-import { trackEvent } from './lib/analytics';
+import { trackAdsConversion, trackEvent } from './lib/analytics';
 import Home from './pages/Home';
 import { landingPages } from './data/landingPages';
 
@@ -64,6 +64,7 @@ function CallTracking() {
         phone_number: link.getAttribute('href').replace('tel:', ''),
         page_path: window.location.pathname,
       });
+      trackAdsConversion('phoneCall');
     };
 
     document.addEventListener('click', handleClick);
