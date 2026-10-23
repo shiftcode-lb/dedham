@@ -63,7 +63,12 @@ function setHead(html, page) {
 for (const page of [...hubPages, ...landingPages]) {
   const dir = join(dist, page.path);
   mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, 'index.html'), setHead(template, page));
+  const html = setHead(template, page);
+  writeFileSync(join(dir, 'index.html'), html);
+  // Also emit /<route>.html: hosts that rewrite every extensionless path to
+  // the SPA shell (the catch-all in public/_redirects) still serve this
+  // file for the canonical no-trailing-slash URL.
+  writeFileSync(join(dist, `${page.path}.html`), html);
 }
 
 console.log(`postbuild: sitemap + ${hubPages.length + landingPages.length} prerendered heads`);
