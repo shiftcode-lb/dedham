@@ -15,6 +15,10 @@ const dist = join(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const template = readFileSync(join(dist, 'index.html'), 'utf8');
 const today = new Date().toISOString().slice(0, 10);
 
+// Hosts that rewrite extensionless paths to the SPA shell only serve the
+// prerendered head at the trailing-slash URL, so that is the canonical form.
+const slashed = (path) => (path.endsWith('/') ? path : `${path}/`);
+
 const escape = (value) =>
   value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
@@ -34,7 +38,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 ${[...staticPages, ...hubs, ...landing]
   .map(
     ([path, priority, changefreq]) => `  <url>
-    <loc>${SITE_URL}${path === '/' ? '/' : path}</loc>
+    <loc>${SITE_URL}${slashed(path)}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
@@ -48,7 +52,7 @@ writeFileSync(join(dist, 'sitemap.xml'), sitemap);
 function setHead(html, page) {
   const title = escape(page.title);
   const description = escape(page.description);
-  const url = `${SITE_URL}${page.path}`;
+  const url = `${SITE_URL}${slashed(page.path)}`;
   return html
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
     .replace(/(<meta\s+name="description"\s+content=")[^"]*(")/, `$1${description}$2`)

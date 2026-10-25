@@ -18,7 +18,7 @@ function swapAttr(selector, attr, value) {
 // every route gets its own SEO identity instead of sharing the homepage's.
 export default function PageMeta({ title, description, path = '/' }) {
   useEffect(() => {
-    const url = new URL(path, SITE_URL).href;
+    const url = new URL(path.endsWith('/') ? path : `${path}/`, SITE_URL).href;
     const previousTitle = document.title;
     document.title = title;
 
