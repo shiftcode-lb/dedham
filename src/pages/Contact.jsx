@@ -116,6 +116,10 @@ export default function Contact() {
         },
       );
 
+      trackEvent('booking_submit', {
+        service_type: form.serviceType,
+        car_type: form.carType,
+      });
       trackEvent('generate_lead', {
         service_type: form.serviceType,
         car_type: form.carType,

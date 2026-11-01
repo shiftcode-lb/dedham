@@ -52,17 +52,35 @@ function ScrollToTop() {
   return null;
 }
 
-// Delegated click listener so every tel: link on the site (navbar, footer,
-// contact page, 404 page) reports a call-intent event without each one
-// needing its own onClick handler.
+// Where on the page a tel:/sms: link sits, for the `location` event param.
+function linkLocation(link) {
+  if (link.dataset.trackLocation) return link.dataset.trackLocation;
+  if (link.closest('footer')) return 'footer';
+  if (link.closest('header')) return 'header';
+  return 'body';
+}
+
+// Delegated click listener so every tel: and sms: link on the site reports
+// a call/text-intent event without each one needing its own onClick handler.
+// `phone_call_click` is the older event name, kept so existing GA4/Ads
+// reports keep working alongside `click_to_call`.
 function CallTracking() {
   useEffect(() => {
     const handleClick = (event) => {
-      const link = event.target.closest('a[href^="tel:"]');
+      const link = event.target.closest('a[href^="tel:"], a[href^="sms:"]');
       if (!link) return;
 
+      const href = link.getAttribute('href');
+      const location = linkLocation(link);
+
+      if (href.startsWith('sms:')) {
+        trackEvent('click_to_text', { location, page_path: window.location.pathname });
+        return;
+      }
+
+      trackEvent('click_to_call', { location, page_path: window.location.pathname });
       trackEvent('phone_call_click', {
-        phone_number: link.getAttribute('href').replace('tel:', ''),
+        phone_number: href.replace('tel:', ''),
         page_path: window.location.pathname,
       });
       trackAdsConversion('phoneCall');
