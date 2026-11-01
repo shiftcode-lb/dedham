@@ -1,6 +1,7 @@
 import logo from '../assets/images/dedham-official-logo.webp';
 import { serviceAreas } from './serviceAreas';
 import { faqs } from './faq';
+import { BUSINESS } from './business';
 
 // Google Business Profile listing + active social profiles, so search
 // engines can confirm this site, the GBP listing, and the social accounts
@@ -10,6 +11,10 @@ const SAME_AS = [
   'https://www.google.com/maps/search/?api=1&query=Dedham+Airport+Taxi+%26+Livery+Dedham+MA',
   'https://www.instagram.com/dedhamairport',
 ];
+
+// TODO(client): add the Google Business Profile, Facebook and Yelp URLs here
+// once the profiles exist/are claimed (SAME_AS above only lists the Maps
+// search link and Instagram).
 
 const SITE_URL = 'https://dedhamairporttaxi.com';
 
@@ -32,12 +37,18 @@ const businessCore = {
 
   url: `${SITE_URL}/`,
   image: absoluteUrl(logo),
+  logo: absoluteUrl(logo),
+  hasMap:
+    'https://www.google.com/maps/search/?api=1&query=3+Allied+Dr+Ste+303+Dedham+MA+02026',
 
   telephone: '+1-781-777-8033',
-  email: 'dedhamairporttaxi@gmail.com',
+  email: BUSINESS.email,
 
   description:
     'Dedham Airport Taxi & Livery provides professional airport transportation, private car service, corporate travel, and local transportation in Dedham, Massachusetts, including service to and from Boston Logan International Airport.',
+
+  // TODO(client): confirm the office coordinates, then add
+  // geo: { '@type': 'GeoCoordinates', latitude, longitude }. Not guessed.
 
   address: {
     '@type': 'PostalAddress',
@@ -163,7 +174,7 @@ export const contactSchema = {
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+1-781-777-8033',
-      email: 'dedhamairporttaxi@gmail.com',
+      email: BUSINESS.email,
       contactType: 'customer service',
       areaServed: 'US',
     },
@@ -204,7 +215,10 @@ export function buildLandingSchema(page) {
         serviceType: 'Taxi and car service',
         url,
         provider: { '@id': `${SITE_URL}/#taxi-service` },
-        areaServed: page.breadcrumbName,
+        areaServed:
+          page.type === 'town'
+            ? { '@type': 'City', name: `${page.breadcrumbName}, MA` }
+            : page.breadcrumbName,
       },
       {
         '@type': 'BreadcrumbList',
