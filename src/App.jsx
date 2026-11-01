@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import PromoBanner from './components/PromoBanner';
 import Footer from './components/Footer';
+import StickyActionBar from './components/StickyActionBar';
 import { trackAdsConversion, trackEvent } from './lib/analytics';
 import Home from './pages/Home';
 import { landingPages } from './data/landingPages';
@@ -76,7 +77,7 @@ function CallTracking() {
 
 export default function App() {
   return (
-    <>
+    <div className="max-[767px]:pb-[calc(60px+env(safe-area-inset-bottom))]">
       <ScrollToTop />
       <CallTracking />
       <div className="sticky top-0 z-[100]">
@@ -102,6 +103,7 @@ export default function App() {
         </Suspense>
       </main>
       <Footer />
-    </>
+      <StickyActionBar />
+    </div>
   );
 }

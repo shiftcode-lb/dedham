@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, Phone, X } from 'lucide-react';
+import { BUSINESS, TEL_HREF } from '../data/business';
 import logo from '../assets/images/dedham-official-logo-navbar.webp';
 import { SITE_CONTAINER } from '../styles/container';
 
@@ -93,12 +94,23 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <Link
-          className="hidden hover:bg-[#1E5152] min-[1081px]:inline-flex items-center justify-center bg-turquoise text-white text-[11px] font-semibold tracking-[0.08em] py-[12px] px-[18px] rounded-lg whitespace-nowrap"
-          to="/contact/"
-        >
-          BOOK NOW
-        </Link>
+        <div className="hidden min-[1081px]:flex items-center gap-4">
+          <a
+            className="inline-flex items-center gap-2 text-[14px] font-semibold text-turquoise-dark whitespace-nowrap hover:text-turquoise"
+            href={TEL_HREF}
+            data-track-location="header"
+            aria-label={`Call ${BUSINESS.phoneDisplay}`}
+          >
+            <Phone size={16} aria-hidden="true" />
+            <span className="hidden min-[1280px]:inline">{BUSINESS.phoneDisplay}</span>
+          </a>
+          <Link
+            className="hover:bg-[#1E5152] inline-flex items-center justify-center bg-turquoise text-white text-[11px] font-semibold tracking-[0.08em] py-[12px] px-[18px] rounded-lg whitespace-nowrap"
+            to="/contact/"
+          >
+            BOOK NOW
+          </Link>
+        </div>
 
         <button
           className="min-[1081px]:hidden grid place-items-center bg-transparent border-0 text-[#174f51] p-2 cursor-pointer"
