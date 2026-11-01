@@ -16,6 +16,7 @@ const Services = lazy(() => import('./pages/Services'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Safety = lazy(() => import('./pages/Safety'));
 const Terms = lazy(() => import('./pages/Terms'));
+const Privacy = lazy(() => import('./pages/Privacy'));
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const HubPage = lazy(() => import('./pages/HubPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
@@ -111,6 +112,7 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/safety" element={<Safety />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route path="/service-areas" element={<HubPage path="/service-areas" />} />
             <Route path="/routes" element={<HubPage path="/routes" />} />
             {landingPages.map((page) => (

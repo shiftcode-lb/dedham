@@ -79,6 +79,10 @@ export default function Footer() {
             <NavLink className={linkClasses} to="/terms/">
               Terms and Conditions
             </NavLink>
+
+            <NavLink className={linkClasses} to="/privacy/">
+              Privacy Policy
+            </NavLink>
           </nav>
         </div>
 

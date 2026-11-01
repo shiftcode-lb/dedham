@@ -9,4 +9,5 @@ export const staticPages = [
   { path: '/contact', priority: '0.9', changefreq: 'monthly' },
   { path: '/safety', priority: '0.5', changefreq: 'yearly' },
   { path: '/terms', priority: '0.3', changefreq: 'yearly' },
+  { path: '/privacy', priority: '0.3', changefreq: 'yearly' },
 ];

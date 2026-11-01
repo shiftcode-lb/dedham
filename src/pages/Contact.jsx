@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import { Mail, MapPin, Phone } from 'lucide-react';
 
@@ -522,6 +523,14 @@ export default function Contact() {
             >
               {status === 'sending' ? 'Sending Request...' : 'Submit Request →'}
             </button>
+
+            <p className="text-center text-[11px] text-slate-500 mt-3">
+              By submitting you agree to our{' '}
+              <Link className="underline" to="/privacy/">
+                Privacy Policy
+              </Link>
+              .
+            </p>
 
             {status === 'error' && (
               <p role="alert" className="text-center text-xs font-medium mt-3 text-red-700">
