@@ -1,1 +1,8 @@
-/*    /index.html   200
+# Netlify / Cloudflare Pages. No SPA catch-all: every route is a prerendered
+# static file and unknown URLs get dist/404.html with a real 404 status.
+# TODO(client): add the other old-site URLs once known (Google Search
+# Console > Pages, or the old sitemap).
+/limo-service            /services/  301
+/limo-service/           /services/  301
+/terms-and-conditions    /terms/     301
+/terms-and-conditions/   /terms/     301

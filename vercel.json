@@ -1,3 +1,7 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/limo-service", "destination": "/services/", "permanent": true },
+    { "source": "/terms-and-conditions", "destination": "/terms/", "permanent": true }
+  ]
 }

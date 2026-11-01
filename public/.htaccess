@@ -1,6 +1,17 @@
+# Hostinger / Apache. Every route is prerendered to dist/<route>/index.html
+# (see scripts/postbuild.mjs), so there is no SPA catch-all: unknown URLs get
+# a real 404 status with the site's 404 page.
 RewriteEngine On
-  RewriteBase /
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+RewriteBase /
+
+# Old-site URLs still indexed by search engines -> permanent redirects.
+# TODO(client): add the other old-site URLs once known (Google Search
+# Console > Pages, or the old sitemap).
+RewriteRule ^limo-service/?$ /services/ [R=301,L]
+RewriteRule ^terms-and-conditions/?$ /terms/ [R=301,L]
+
+# One URL form: /x -> /x/ (explicit, so it doesn't depend on DirectorySlash).
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
+
+ErrorDocument 404 /404.html
