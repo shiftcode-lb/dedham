@@ -4,6 +4,7 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 
 import bg from '../assets/images/real-suburban-airport.webp';
 
+import AddressInput from '../components/AddressInput';
 import SchemaMarkup from '../components/SchemaMarkup';
 import PageMeta from '../components/PageMeta';
 import { contactSchema } from '../data/schema';
@@ -300,7 +301,7 @@ export default function Contact() {
             <FormSection title="02 Trip Details">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="PICK-UP LOCATION" htmlFor="pickupLocation" required>
-                  <input
+                  <AddressInput
                     id="pickupLocation"
                     className={inputClasses}
                     required
@@ -312,7 +313,7 @@ export default function Contact() {
                 </Field>
 
                 <Field label="DROP-OFF LOCATION" htmlFor="dropoffLocation" required>
-                  <input
+                  <AddressInput
                     id="dropoffLocation"
                     className={inputClasses}
                     required
