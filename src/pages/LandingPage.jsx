@@ -3,6 +3,7 @@ import { Check, Phone } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
 import SchemaMarkup from '../components/SchemaMarkup';
 import { landingPages } from '../data/landingPages';
+import { getRates } from '../data/rates';
 import { buildLandingSchema } from '../data/schema';
 import { BTN_TEAL } from '../styles/buttons';
 import { SITE_CONTAINER } from '../styles/container';
@@ -14,6 +15,7 @@ export default function LandingPage({ page }) {
   const siblings = landingPages
     .filter((item) => item.type === page.type && item.path !== page.path)
     .slice(0, 8);
+  const rates = getRates(page.path);
 
   return (
     <>
@@ -58,6 +60,28 @@ export default function LandingPage({ page }) {
               </div>
             ))}
           </dl>
+
+          {rates && (
+            <>
+              <h2 className="font-semibold text-[26px] text-turquoise mb-4">Sample flat rates</h2>
+              <dl className="grid grid-cols-2 max-[600px]:grid-cols-1 gap-4 mb-12">
+                {[
+                  ['Sedan (up to 3 passengers)', rates.sedan],
+                  ['SUV (3–6 passengers)', rates.suv],
+                ]
+                  .filter(([, amount]) => amount != null)
+                  .map(([label, amount]) => (
+                    <div key={label} className="border border-line rounded-xl bg-white p-5">
+                      <dt className="text-[13px] uppercase tracking-wider text-muted mb-1">{label}</dt>
+                      <dd className="text-[18px] font-semibold text-charcoal">${amount}</dd>
+                    </div>
+                  ))}
+              </dl>
+              <p className="text-[13px] text-muted -mt-8 mb-12">
+                Sample rates; your flat rate is confirmed at booking.
+              </p>
+            </>
+          )}
 
           <h2 className="font-semibold text-[26px] text-turquoise mb-4">What you get</h2>
           <ul className="grid gap-3 mb-12">
