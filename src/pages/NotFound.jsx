@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone } from 'lucide-react';
+import { TEL_HREF } from '../data/business';
 import { SITE_CONTAINER } from '../styles/container';
 
 // Rendered for any path that doesn't match a real page (old bookmarked
@@ -55,7 +56,7 @@ export default function NotFound() {
           </Link>
         </div>
         <a
-          href="tel:+17817778033"
+          href={TEL_HREF}
           className="inline-flex items-center gap-2 text-[#2C3E50] text-[16px] font-medium hover:text-[#00646a]"
         >
           <Phone size={18} />

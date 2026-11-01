@@ -1,5 +1,5 @@
 import PageMeta from '../components/PageMeta';
-import { BUSINESS } from '../data/business';
+import { BUSINESS, TEL_HREF } from '../data/business';
 import { SITE_CONTAINER } from '../styles/container';
 
 // TODO(client): legal review of this policy before relying on it.
@@ -79,7 +79,7 @@ export default function Privacy() {
                 {BUSINESS.email}
               </a>{' '}
               or call{' '}
-              <a className="text-[#2A6E6F] underline" href="tel:+17817778033">
+              <a className="text-[#2A6E6F] underline" href={TEL_HREF}>
                 {BUSINESS.phoneDisplay}
               </a>
               .

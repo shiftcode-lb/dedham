@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Clock3, MapPin, Phone, Plane } from 'lucide-react';
 import ServiceAreas from './ServiceAreas';
 import { SITE_CONTAINER } from '../styles/container';
+import { ADDRESS, BUSINESS, SERVICE_AREA_LABEL, SHOW_ADDRESS } from '../data/business';
 
 const MAP_URL =
   'https://www.openstreetmap.org/export/embed.html?bbox=-71.228%2C42.218%2C-71.125%2C42.286&layer=mapnik&marker=42.247%2C-71.166';
@@ -59,15 +60,21 @@ export default function LocationCoverage() {
                 <small className="block font-semibold text-[#78bbb9] text-[12px] mb-[3px]">
                   MAIN OFFICE
                 </small>
-                3 Allied Dr Ste 303
-                <br />
-                Dedham, MA 02026
+                {SHOW_ADDRESS ? (
+                  <>
+                    {ADDRESS.street}
+                    <br />
+                    {ADDRESS.city}, {ADDRESS.region} {ADDRESS.postalCode}
+                  </>
+                ) : (
+                  SERVICE_AREA_LABEL
+                )}
               </span>
             </div>
 
             <div className="flex gap-[9px] py-2 border-b border-white/[.08] [&_svg]:text-[#61b2b0] [&_svg]:flex-none">
               <Phone size={15} />
-              <span>781-777-8033</span>
+              <span>{BUSINESS.phoneDisplay}</span>
             </div>
 
             <div className="flex gap-[9px] py-2 [&_svg]:text-[#61b2b0] [&_svg]:flex-none">

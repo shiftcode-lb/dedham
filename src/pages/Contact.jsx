@@ -10,6 +10,7 @@ import SchemaMarkup from '../components/SchemaMarkup';
 import PageMeta from '../components/PageMeta';
 import { contactSchema } from '../data/schema';
 import { SITE_CONTAINER } from '../styles/container';
+import { ADDRESS, BUSINESS, SERVICE_AREA_LABEL, SHOW_ADDRESS, TEL_HREF } from '../data/business';
 import { trackAdsConversion, trackEvent } from '../lib/analytics';
 
 const COUNTRY_CODES = [
@@ -172,23 +173,25 @@ export default function Contact() {
           <div className="border-t border-white/20 pt-6 space-y-4">
             <a
               className="flex items-center gap-3 text-sm font-medium text-slate-200 hover:text-teal-400 transition-colors"
-              href="tel:+17817778033"
+              href={TEL_HREF}
             >
               <Phone size={18} className="text-teal-400 shrink-0" />
-              781-777-8033
+              {BUSINESS.phoneDisplay}
             </a>
 
             <a
               className="flex items-center gap-3 text-sm font-medium text-slate-200 hover:text-teal-400 transition-colors"
-              href="mailto:dedhamairporttaxi@gmail.com"
+              href={`mailto:${BUSINESS.email}`}
             >
               <Mail size={18} className="text-teal-400 shrink-0" />
-              dedhamairporttaxi@gmail.com
+              {BUSINESS.email}
             </a>
 
             <span className="flex items-center gap-3 text-sm font-medium text-slate-200">
               <MapPin size={18} className="text-teal-400 shrink-0" />
-              Boston Metro Area &amp; Logan Airport
+              {SHOW_ADDRESS
+                ? `${ADDRESS.street}, ${ADDRESS.city}, ${ADDRESS.region} ${ADDRESS.postalCode}`
+                : SERVICE_AREA_LABEL}
             </span>
           </div>
         </div>
@@ -202,7 +205,7 @@ export default function Contact() {
             <h2 className="text-xl font-semibold text-teal-700 mb-3">Request received</h2>
             <p className="text-sm text-slate-700 leading-relaxed mb-5">
               We&apos;ll confirm by phone or text shortly. Need it now? Call{' '}
-              <a className="font-semibold text-teal-700 underline" href="tel:+17817778033">
+              <a className="font-semibold text-teal-700 underline" href={TEL_HREF}>
                 781-777-8033
               </a>
               .
@@ -535,7 +538,7 @@ export default function Contact() {
             {status === 'error' && (
               <p role="alert" className="text-center text-xs font-medium mt-3 text-red-700">
                 We could not send your request. Please try again or call{' '}
-                <a className="underline" href="tel:+17817778033">
+                <a className="underline" href={TEL_HREF}>
                   781-777-8033
                 </a>
                 .

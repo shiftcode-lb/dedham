@@ -1,7 +1,7 @@
 import logo from '../assets/images/dedham-official-logo.webp';
 import { serviceAreas } from './serviceAreas';
 import { faqs } from './faq';
-import { BUSINESS } from './business';
+import { ADDRESS, BUSINESS, SHOW_ADDRESS } from './business';
 
 // Google Business Profile listing + active social profiles, so search
 // engines can confirm this site, the GBP listing, and the social accounts
@@ -50,14 +50,16 @@ const businessCore = {
   // TODO(client): confirm the office coordinates, then add
   // geo: { '@type': 'GeoCoordinates', latitude, longitude }. Not guessed.
 
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '3 Allied Dr Ste 303',
-    addressLocality: 'Dedham',
-    addressRegion: 'MA',
-    postalCode: '02026',
-    addressCountry: 'US',
-  },
+  ...(SHOW_ADDRESS && {
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: ADDRESS.street,
+      addressLocality: ADDRESS.city,
+      addressRegion: ADDRESS.region,
+      postalCode: ADDRESS.postalCode,
+      addressCountry: 'US',
+    },
+  }),
 
   areaServed: serviceAreas,
 

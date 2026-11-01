@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { SITE_CONTAINER } from '../styles/container';
+import { ADDRESS, BUSINESS, SERVICE_AREA_LABEL, SHOW_ADDRESS, TEL_HREF } from '../data/business';
 
 const linkClasses =
   'flex gap-2.5 items-center text-sm text-[#d7dfe0] hover:text-[#65b3b0] transition-colors no-underline [&.active]:text-[#65b3b0]';
@@ -95,18 +96,18 @@ export default function Footer() {
           <div className="flex flex-col space-y-3">
             <a
               className={`${linkClasses} [&_svg]:text-[#65b3b0] [&_svg]:flex-none`}
-              href="tel:+17817778033"
+              href={TEL_HREF}
             >
               <Phone size={16} />
-              <span>781-777-8033</span>
+              <span>{BUSINESS.phoneDisplay}</span>
             </a>
 
             <a
               className={`${linkClasses} [&_svg]:text-[#65b3b0] [&_svg]:flex-none`}
-              href="mailto:dedhamairporttaxi@gmail.com"
+              href={`mailto:${BUSINESS.email}`}
             >
               <Mail size={16} />
-              <span>dedhamairporttaxi@gmail.com</span>
+              <span>{BUSINESS.email}</span>
             </a>
 
             <div
@@ -114,11 +115,15 @@ export default function Footer() {
             >
               <MapPin size={16} />
 
-              <span>
-                3 Allied Dr Ste 303
-                <br />
-                Dedham, MA 02026
-              </span>
+              {SHOW_ADDRESS ? (
+                <span>
+                  {ADDRESS.street}
+                  <br />
+                  {ADDRESS.city}, {ADDRESS.region} {ADDRESS.postalCode}
+                </span>
+              ) : (
+                <span>{SERVICE_AREA_LABEL}</span>
+              )}
             </div>
           </div>
         </div>

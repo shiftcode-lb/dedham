@@ -6,6 +6,7 @@ import { landingPages } from '../data/landingPages';
 import { getRates } from '../data/rates';
 import { buildLandingSchema } from '../data/schema';
 import { BTN_TEAL } from '../styles/buttons';
+import { TEL_HREF } from '../data/business';
 import { SITE_CONTAINER } from '../styles/container';
 
 // Shared template for every town and route page: real drive time/distance,
@@ -44,7 +45,7 @@ export default function LandingPage({ page }) {
               Book a Ride
             </Link>
             <a
-              href="tel:+17817778033"
+              href={TEL_HREF}
               className="inline-flex items-center gap-2 text-turquoise-dark text-[16px] font-medium px-4"
             >
               <Phone size={18} />
