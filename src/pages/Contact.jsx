@@ -22,12 +22,23 @@ const COUNTRY_CODES = [
   { code: '+81', country: 'JP' },
 ];
 
+const SERVICE_TYPES = [
+  'Airport — to Logan (BOS)',
+  'Airport — from Logan (BOS)',
+  'Airport — other (PVD / MHT)',
+  'Point to Point Transportation',
+  'Night Out',
+  'Hourly Limo',
+];
+
+const CHILD_SEATS = ['None', 'Infant', 'Toddler', 'Booster'];
+
 const initial = {
   name: '',
   email: '',
   countryCode: '+1',
   phone: '',
-  serviceType: 'Point to Point Transportation',
+  serviceType: 'Airport — to Logan (BOS)',
   pickupLocation: '',
   dropoffLocation: '',
   passengers: '1',
@@ -35,7 +46,14 @@ const initial = {
   carType: 'Luxury Sedan (Up to 3 passengers)',
   pickupDate: '',
   pickupHour: '',
+  flightNumber: '',
+  airline: '',
+  roundTrip: false,
+  returnDate: '',
+  returnHour: '',
   returnFlightNumber: '',
+  childSeat: 'None',
+  notes: '',
 };
 
 const inputClasses =
@@ -44,27 +62,22 @@ const inputClasses =
 export default function Contact() {
   const [form, setForm] = useState(initial);
   const [status, setStatus] = useState('idle');
-  const [message, setMessage] = useState('');
 
   const update = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
     setForm((currentForm) => ({
       ...currentForm,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
 
-    if (status !== 'idle') {
-      setStatus('idle');
-      setMessage('');
-    }
+    if (status === 'error') setStatus('idle');
   };
 
   const submit = async (e) => {
     e.preventDefault();
 
     setStatus('sending');
-    setMessage('');
 
     const templateParameters = {
       customer_name: form.name,
@@ -79,8 +92,18 @@ export default function Contact() {
       car_type: form.carType,
       pickup_date: form.pickupDate,
       pickup_hour: form.pickupHour,
-      return_flight_number: form.returnFlightNumber || 'N/A',
+      flight_number: form.flightNumber || 'N/A',
+      airline: form.airline || 'N/A',
+      round_trip: form.roundTrip ? 'Yes' : 'No',
+      return_date: form.roundTrip ? form.returnDate : 'N/A',
+      return_hour: form.roundTrip ? form.returnHour : 'N/A',
+      return_flight_number: form.roundTrip ? form.returnFlightNumber || 'N/A' : 'N/A',
+      child_seat: form.childSeat,
+      notes: form.notes || 'N/A',
     };
+
+    // Dev-only: lets you confirm every field reaches the EmailJS template.
+    if (import.meta.env.DEV) console.info('Booking payload', templateParameters);
 
     try {
       await emailjs.send(
@@ -99,15 +122,11 @@ export default function Contact() {
       trackAdsConversion('lead');
 
       setStatus('success');
-      setMessage('Thank you. Your ride request has been sent successfully.');
       setForm(initial);
     } catch (error) {
       console.error('EmailJS error:', error);
 
       setStatus('error');
-      setMessage(
-        'We could not send your request. Please try again or call 781-777-8033.',
-      );
     }
   };
 
@@ -169,211 +188,347 @@ export default function Contact() {
         </div>
 
         {/* Right Side Form */}
-        <form
-          className="bg-white rounded-xl p-6 sm:p-8 shadow-2xl border border-slate-100 max-w-xl w-full mx-auto"
-          onSubmit={submit}
-        >
-          {/* Section 1 */}
-          <FormSection title="01 Passenger Info">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="FULL NAME" required>
-                <input
-                  className={inputClasses}
-                  required
-                  name="name"
-                  value={form.name}
-                  onChange={update}
-                  placeholder="John Doe"
-                  autoComplete="name"
-                />
-              </Field>
+        {status === 'success' ? (
+          <div
+            role="status"
+            className="bg-white rounded-xl p-6 sm:p-8 shadow-2xl border border-slate-100 max-w-xl w-full mx-auto text-center"
+          >
+            <h2 className="text-xl font-semibold text-teal-700 mb-3">Request received</h2>
+            <p className="text-sm text-slate-700 leading-relaxed mb-5">
+              We&apos;ll confirm by phone or text shortly. Need it now? Call{' '}
+              <a className="font-semibold text-teal-700 underline" href="tel:+17817778033">
+                781-777-8033
+              </a>
+              .
+            </p>
+            <button
+              type="button"
+              className="text-xs font-semibold tracking-wider uppercase text-teal-700 underline cursor-pointer"
+              onClick={() => setStatus('idle')}
+            >
+              Submit another request
+            </button>
+          </div>
+        ) : (
+          <form
+            className="bg-white rounded-xl p-6 sm:p-8 shadow-2xl border border-slate-100 max-w-xl w-full mx-auto"
+            method="post"
+            action="/contact/"
+            onSubmit={submit}
+          >
+            {/* Section 1 */}
+            <FormSection title="01 Passenger Info">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Field label="FULL NAME" htmlFor="name" required>
+                  <input
+                    id="name"
+                    className={inputClasses}
+                    required
+                    name="name"
+                    value={form.name}
+                    onChange={update}
+                    placeholder="John Doe"
+                    autoComplete="name"
+                  />
+                </Field>
 
-              <Field label="EMAIL ADDRESS" required>
-                <input
-                  className={inputClasses}
-                  required
-                  type="email"
-                  name="email"
-                  value={form.email}
-                  onChange={update}
-                  placeholder="john@example.com"
-                  autoComplete="email"
-                />
-              </Field>
-            </div>
+                <Field label="EMAIL ADDRESS" htmlFor="email" required>
+                  <input
+                    id="email"
+                    className={inputClasses}
+                    required
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={update}
+                    placeholder="john@example.com"
+                    autoComplete="email"
+                  />
+                </Field>
+              </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-              <Field label="PHONE NUMBER" required>
-                <div className="flex items-center border border-slate-300 bg-white rounded-md focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500 transition-all overflow-hidden">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                <Field label="PHONE NUMBER" htmlFor="phone" required>
+                  <div className="flex items-center border border-slate-300 bg-white rounded-md focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500 transition-all overflow-hidden">
+                    <select
+                      className="bg-slate-50 border-r border-slate-200 text-slate-700 px-2 py-2 outline-none text-xs sm:text-sm font-medium cursor-pointer shrink-0 h-full"
+                      name="countryCode"
+                      aria-label="Phone country code"
+                      value={form.countryCode}
+                      onChange={update}
+                    >
+                      {COUNTRY_CODES.map((item) => (
+                        <option key={item.code} value={item.code}>
+                          {item.code} ({item.country})
+                        </option>
+                      ))}
+                    </select>
+
+                    <input
+                      id="phone"
+                      className="w-full bg-transparent text-slate-700 px-3 py-2 outline-none text-xs sm:text-sm"
+                      required
+                      type="tel"
+                      name="phone"
+                      value={form.phone}
+                      onChange={update}
+                      placeholder="(555) 000-0000"
+                      autoComplete="tel"
+                    />
+                  </div>
+                </Field>
+
+                <Field label="SERVICE TYPE" htmlFor="serviceType" required>
                   <select
-                    className="bg-slate-50 border-r border-slate-200 text-slate-700 px-2 py-2 outline-none text-xs sm:text-sm font-medium cursor-pointer shrink-0 h-full"
-                    name="countryCode"
-                    value={form.countryCode}
+                    id="serviceType"
+                    className={inputClasses}
+                    name="serviceType"
+                    value={form.serviceType}
                     onChange={update}
                   >
-                    {COUNTRY_CODES.map((item) => (
-                      <option key={item.code} value={item.code}>
-                        {item.code} ({item.country})
+                    {SERVICE_TYPES.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
                       </option>
                     ))}
                   </select>
+                </Field>
+              </div>
+            </FormSection>
 
+            {/* Section 2 */}
+            <FormSection title="02 Trip Details">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Field label="PICK-UP LOCATION" htmlFor="pickupLocation" required>
                   <input
-                    className="w-full bg-transparent text-slate-700 px-3 py-2 outline-none text-xs sm:text-sm"
+                    id="pickupLocation"
+                    className={inputClasses}
                     required
-                    type="tel"
-                    name="phone"
-                    value={form.phone}
+                    name="pickupLocation"
+                    value={form.pickupLocation}
                     onChange={update}
-                    placeholder="(555) 000-0000"
-                    autoComplete="tel"
+                    placeholder="Street address, city, or airport"
                   />
+                </Field>
+
+                <Field label="DROP-OFF LOCATION" htmlFor="dropoffLocation" required>
+                  <input
+                    id="dropoffLocation"
+                    className={inputClasses}
+                    required
+                    name="dropoffLocation"
+                    value={form.dropoffLocation}
+                    onChange={update}
+                    placeholder="Street address, city, or airport"
+                  />
+                </Field>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                <Field label="PICKUP DATE" htmlFor="pickupDate" required>
+                  <input
+                    id="pickupDate"
+                    className={inputClasses}
+                    required
+                    type="date"
+                    name="pickupDate"
+                    value={form.pickupDate}
+                    onChange={update}
+                  />
+                </Field>
+
+                <Field label="PICKUP HOUR" htmlFor="pickupHour" required>
+                  <input
+                    id="pickupHour"
+                    className={inputClasses}
+                    required
+                    type="time"
+                    name="pickupHour"
+                    value={form.pickupHour}
+                    onChange={update}
+                  />
+                </Field>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                <Field label="PICKUP FLIGHT NUMBER (OPTIONAL)" htmlFor="flightNumber">
+                  <input
+                    id="flightNumber"
+                    className={inputClasses}
+                    name="flightNumber"
+                    value={form.flightNumber}
+                    onChange={update}
+                    placeholder="e.g. AA 1234"
+                  />
+                </Field>
+
+                <Field label="AIRLINE (OPTIONAL)" htmlFor="airline">
+                  <input
+                    id="airline"
+                    className={inputClasses}
+                    name="airline"
+                    value={form.airline}
+                    onChange={update}
+                    placeholder="e.g. Delta"
+                  />
+                </Field>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                <Field label="NUMBER OF PASSENGERS" htmlFor="passengers" required>
+                  <input
+                    id="passengers"
+                    className={inputClasses}
+                    required
+                    type="number"
+                    min="1"
+                    max="14"
+                    name="passengers"
+                    value={form.passengers}
+                    onChange={update}
+                  />
+                </Field>
+
+                <Field label="NUMBER OF SUITCASES" htmlFor="suitcases" required>
+                  <input
+                    id="suitcases"
+                    className={inputClasses}
+                    required
+                    type="number"
+                    min="0"
+                    max="10"
+                    name="suitcases"
+                    value={form.suitcases}
+                    onChange={update}
+                  />
+                </Field>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                <Field label="CAR TYPE" htmlFor="carType" required>
+                  <select
+                    id="carType"
+                    className={inputClasses}
+                    name="carType"
+                    value={form.carType}
+                    onChange={update}
+                  >
+                    <option value="Luxury Sedan (Up to 3 passengers)">
+                      Luxury Sedan (Up to 3 passengers)
+                    </option>
+                    <option value="Luxury SUV (3-6 passengers)">
+                      Luxury SUV (3-6 passengers)
+                    </option>
+                  </select>
+                </Field>
+
+                <Field label="CHILD SEAT NEEDED" htmlFor="childSeat">
+                  <select
+                    id="childSeat"
+                    className={inputClasses}
+                    name="childSeat"
+                    value={form.childSeat}
+                    onChange={update}
+                  >
+                    {CHILD_SEATS.map((seat) => (
+                      <option key={seat} value={seat}>
+                        {seat}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+              </div>
+
+              <div className="mt-4">
+                <label
+                  htmlFor="roundTrip"
+                  className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-700 cursor-pointer"
+                >
+                  <input
+                    id="roundTrip"
+                    type="checkbox"
+                    name="roundTrip"
+                    checked={form.roundTrip}
+                    onChange={update}
+                    className="h-4 w-4 accent-teal-700"
+                  />
+                  Round trip (book my return too)
+                </label>
+              </div>
+
+              {form.roundTrip && (
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+                  <Field label="RETURN DATE" htmlFor="returnDate" required>
+                    <input
+                      id="returnDate"
+                      className={inputClasses}
+                      required
+                      type="date"
+                      name="returnDate"
+                      value={form.returnDate}
+                      onChange={update}
+                    />
+                  </Field>
+
+                  <Field label="RETURN HOUR" htmlFor="returnHour" required>
+                    <input
+                      id="returnHour"
+                      className={inputClasses}
+                      required
+                      type="time"
+                      name="returnHour"
+                      value={form.returnHour}
+                      onChange={update}
+                    />
+                  </Field>
+
+                  <Field label="RETURN FLIGHT (OPTIONAL)" htmlFor="returnFlightNumber">
+                    <input
+                      id="returnFlightNumber"
+                      className={inputClasses}
+                      name="returnFlightNumber"
+                      value={form.returnFlightNumber}
+                      onChange={update}
+                      placeholder="e.g. AA 1234"
+                    />
+                  </Field>
                 </div>
-              </Field>
+              )}
 
-              <Field label="SERVICE TYPE" required>
-                <select
-                  className={inputClasses}
-                  name="serviceType"
-                  value={form.serviceType}
-                  onChange={update}
-                >
-                  <option value="Point to Point Transportation">
-                    Point to Point Transportation
-                  </option>
-                  <option value="Night Out">Night Out</option>
-                  <option value="Hourly Limo">Hourly Limo</option>
-                </select>
-              </Field>
-            </div>
-          </FormSection>
+              <div className="mt-4">
+                <Field label="NOTES (OPTIONAL)" htmlFor="notes">
+                  <textarea
+                    id="notes"
+                    className={inputClasses}
+                    rows={3}
+                    name="notes"
+                    value={form.notes}
+                    onChange={update}
+                    placeholder="Anything else we should know?"
+                  />
+                </Field>
+              </div>
+            </FormSection>
 
-          {/* Section 2 */}
-          <FormSection title="02 Trip Details">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="PICK-UP LOCATION" required>
-                <input
-                  className={inputClasses}
-                  required
-                  name="pickupLocation"
-                  value={form.pickupLocation}
-                  onChange={update}
-                  placeholder="Street address, city, or airport"
-                />
-              </Field>
-
-              <Field label="DROP-OFF LOCATION" required>
-                <input
-                  className={inputClasses}
-                  required
-                  name="dropoffLocation"
-                  value={form.dropoffLocation}
-                  onChange={update}
-                  placeholder="Street address, city, or airport"
-                />
-              </Field>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-              <Field label="NUMBER OF PASSENGERS" required>
-                <input
-                  className={inputClasses}
-                  required
-                  type="number"
-                  min="1"
-                  max="14"
-                  name="passengers"
-                  value={form.passengers}
-                  onChange={update}
-                />
-              </Field>
-
-              <Field label="NUMBER OF SUITCASES" required>
-                <input
-                  className={inputClasses}
-                  required
-                  type="number"
-                  min="0"
-                  max="10"
-                  name="suitcases"
-                  value={form.suitcases}
-                  onChange={update}
-                />
-              </Field>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-              <Field label="CAR TYPE" required>
-                <select
-                  className={inputClasses}
-                  name="carType"
-                  value={form.carType}
-                  onChange={update}
-                >
-                  <option value="Luxury Sedan (Up to 3 passengers)">
-                    Luxury Sedan (Up to 3 passengers)
-                  </option>
-                  <option value="Luxury SUV (3-6 passengers)">
-                    Luxury SUV (3-6 passengers)
-                  </option>
-                </select>
-              </Field>
-
-              <Field label="RETURN FLIGHT NUMBER (OPTIONAL)">
-                <input
-                  className={inputClasses}
-                  name="returnFlightNumber"
-                  value={form.returnFlightNumber}
-                  onChange={update}
-                  placeholder="e.g. AA 1234"
-                />
-              </Field>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-              <Field label="PICKUP DATE" required>
-                <input
-                  className={inputClasses}
-                  required
-                  type="date"
-                  name="pickupDate"
-                  value={form.pickupDate}
-                  onChange={update}
-                />
-              </Field>
-
-              <Field label="PICKUP HOUR" required>
-                <input
-                  className={inputClasses}
-                  required
-                  type="time"
-                  name="pickupHour"
-                  value={form.pickupHour}
-                  onChange={update}
-                />
-              </Field>
-            </div>
-          </FormSection>
-
-          <button
-            className="w-full py-3 cursor-pointer bg-turquoise hover:bg-[#1E5152] text-white font-semibold text-xs tracking-wider uppercase rounded-md transition-all shadow-md active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 mt-2"
-            type="submit"
-            disabled={status === 'sending'}
-          >
-            {status === 'sending' ? 'Sending Request...' : 'Submit Request →'}
-          </button>
-
-          {message && (
-            <p
-              aria-live="polite"
-              className={`text-center text-xs font-medium mt-3 ${
-                status === 'success' ? 'text-teal-700' : 'text-red-600'
-              }`}
+            <button
+              className="w-full py-3 cursor-pointer bg-turquoise hover:bg-[#1E5152] text-white font-semibold text-xs tracking-wider uppercase rounded-md transition-all shadow-md active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 mt-2"
+              type="submit"
+              disabled={status === 'sending'}
             >
-              {message}
-            </p>
-          )}
-        </form>
+              {status === 'sending' ? 'Sending Request...' : 'Submit Request →'}
+            </button>
+
+            {status === 'error' && (
+              <p role="alert" className="text-center text-xs font-medium mt-3 text-red-700">
+                We could not send your request. Please try again or call{' '}
+                <a className="underline" href="tel:+17817778033">
+                  781-777-8033
+                </a>
+                .
+              </p>
+            )}
+          </form>
+        )}
       </div>
     </section>
   );
@@ -390,14 +545,17 @@ function FormSection({ title, children }) {
   );
 }
 
-function Field({ label, required, children }) {
+function Field({ label, htmlFor, required, children }) {
   return (
-    <label className="block">
-      <span className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-1">
+    <div className="block">
+      <label
+        htmlFor={htmlFor}
+        className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-1"
+      >
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
-      </span>
+      </label>
       {children}
-    </label>
+    </div>
   );
 }
