@@ -4,10 +4,19 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles/tailwind.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = document.getElementById('root');
+const app = (
   <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>
 );
+
+// Prerendered pages ship their full HTML inside #root, so attach to it
+// instead of rebuilding it; the dev server serves an empty #root.
+if (root.hasChildNodes()) {
+  ReactDOM.hydrateRoot(root, app);
+} else {
+  ReactDOM.createRoot(root).render(app);
+}

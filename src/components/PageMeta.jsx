@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { collected, isServer } from '../lib/headCollector';
 
 const SITE_URL = 'https://dedhamairporttaxi.com';
 
@@ -16,7 +17,9 @@ function swapAttr(selector, attr, value) {
 // Sets the per-route title, meta description, canonical URL, and Open Graph
 // tags, restoring the previous (index.html default) values on unmount so
 // every route gets its own SEO identity instead of sharing the homepage's.
-export default function PageMeta({ title, description, path = '/' }) {
+export default function PageMeta({ title, description, path = '/', noindex = false }) {
+  if (isServer) collected.meta = { title, description, path, noindex };
+
   useEffect(() => {
     const url = new URL(path.endsWith('/') ? path : `${path}/`, SITE_URL).href;
     const previousTitle = document.title;
@@ -30,6 +33,7 @@ export default function PageMeta({ title, description, path = '/' }) {
       ['meta[name="twitter:title"]', 'content', title],
       ['meta[name="twitter:description"]', 'content', description],
       ['link[rel="canonical"]', 'href', url],
+      ...(noindex ? [['meta[name="robots"]', 'content', 'noindex, follow']] : []),
     ].map(([selector, attr, value]) => [selector, attr, swapAttr(selector, attr, value)]);
 
     return () => {
@@ -38,7 +42,7 @@ export default function PageMeta({ title, description, path = '/' }) {
         if (previous !== undefined) swapAttr(selector, attr, previous);
       });
     };
-  }, [title, description, path]);
+  }, [title, description, path, noindex]);
 
   return null;
 }

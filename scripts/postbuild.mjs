@@ -1,47 +1,104 @@
-// Runs after `vite build`: writes sitemap.xml from the page data and emits a
-// per-route index.html with that route's own <title>, description,
-// canonical and Open Graph tags. The app is a client-rendered SPA, so
-// without this every URL initially serves the homepage's head to any
-// crawler or link preview that doesn't execute JavaScript. Static files win
-// over the SPA rewrite on Vercel/Netlify/Apache, so these are served as-is
-// and React still takes over in the browser.
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+// Runs after `vite build` and the SSR build (see package.json "build").
+// Renders every route with the real React app (src/entry-server.jsx) into
+// dist/<route>/index.html, so crawlers and link previews get the full page
+// text, headings, links, head tags and JSON-LD without running JavaScript;
+// the browser then hydrates the same markup. Also writes sitemap.xml and
+// dist/404.html from the same route list so none of them can drift.
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { hubPages, landingPages } from '../src/data/landingPages.js';
+import { staticPages } from '../src/data/sitePages.js';
 
 const SITE_URL = 'https://dedhamairporttaxi.com';
-const dist = join(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const dist = join(root, 'dist');
+const serverDir = join(root, 'dist-server');
+const { render } = await import(pathToFileURL(join(serverDir, 'entry-server.js')).href);
 const template = readFileSync(join(dist, 'index.html'), 'utf8');
 const today = new Date().toISOString().slice(0, 10);
 
-// Hosts that rewrite extensionless paths to the SPA shell only serve the
-// prerendered head at the trailing-slash URL, so that is the canonical form.
+// Canonicals, sitemap entries and internal links all use the trailing-slash
+// form, which is the only form the host serves with a 200.
 const slashed = (path) => (path.endsWith('/') ? path : `${path}/`);
 
 const escape = (value) =>
   value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
-const staticPages = [
-  ['/', '1.0', 'monthly'],
-  ['/about', '0.8', 'monthly'],
-  ['/services', '0.8', 'monthly'],
-  ['/contact', '0.9', 'monthly'],
-  ['/safety', '0.5', 'yearly'],
-  ['/terms', '0.3', 'yearly'],
+const pages = [
+  ...staticPages,
+  ...hubPages.map((p) => ({ path: p.path, priority: '0.8', changefreq: 'monthly' })),
+  ...landingPages.map((p) => ({
+    path: p.path,
+    priority: p.type === 'town' ? '0.8' : '0.7',
+    changefreq: 'monthly',
+  })),
 ];
-const hubs = hubPages.map((p) => [p.path, '0.8', 'monthly']);
-const landing = landingPages.map((p) => [p.path, p.type === 'town' ? '0.8' : '0.7', 'monthly']);
+
+function setHead(html, { title, description, path, noindex }) {
+  const t = escape(title);
+  const d = escape(description);
+  const url = `${SITE_URL}${slashed(path)}`;
+  let out = html
+    .replace(/<title>[\s\S]*?<\/title>/, `<title>${t}</title>`)
+    .replace(/(<meta\s+name="description"\s+content=")[^"]*(")/, `$1${d}$2`)
+    .replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/, `$1${url}$2`)
+    .replace(/(property="og:title"\s+content=")[^"]*(")/, `$1${t}$2`)
+    .replace(/(property="og:description"\s+content=")[^"]*(")/, `$1${d}$2`)
+    .replace(/(property="og:url"\s+content=")[^"]*(")/, `$1${url}$2`)
+    .replace(/(name="twitter:title"\s+content=")[^"]*(")/, `$1${t}$2`)
+    .replace(/(name="twitter:description"\s+content=")[^"]*(")/, `$1${d}$2`);
+  if (noindex) {
+    out = out.replace(/(<meta\s+name="robots"\s+content=")[^"]*(")/, '$1noindex, follow$2');
+  }
+  return out;
+}
+
+const schemaTags = (schemas) =>
+  schemas
+    .map(
+      (item) =>
+        // "<" is escaped so no schema string can close the script tag early.
+        `<script type="application/ld+json" data-prerendered>${JSON.stringify(item).replace(/</g, '\u003c')}</script>`,
+    )
+    .join('\n    ');
+
+function inject(html, rendered) {
+  let out = html.replace('<div id="root"></div>', () => `<div id="root">${rendered.html}</div>`);
+  if (rendered.schemas.length > 0) {
+    out = out.replace('</head>', () => `${schemaTags(rendered.schemas)}\n  </head>`);
+  }
+  return out;
+}
+
+for (const page of pages) {
+  const rendered = await render(slashed(page.path));
+  if (!rendered.meta) throw new Error(`prerender: ${page.path} reported no PageMeta`);
+  const html = inject(setHead(template, rendered.meta), rendered);
+  const isHome = page.path === '/';
+  const dir = isHome ? dist : join(dist, page.path);
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'index.html'), html);
+}
+
+// Unknown URLs: the host serves this file with a real 404 status.
+const notFound = await render('/page-not-found/');
+const notFoundHtml = inject(template, notFound)
+  .replace(/<title>[\s\S]*?<\/title>/, '<title>Page Not Found | Dedham Airport Taxi &amp; Livery</title>')
+  .replace(/<link\s+rel="canonical"[^>]*>\s*/, '')
+  .replace(/(<meta\s+name="robots"\s+content=")[^"]*(")/, '$1noindex, follow$2');
+writeFileSync(join(dist, '404.html'), notFoundHtml);
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...staticPages, ...hubs, ...landing]
+${pages
+  .filter((p) => p.index !== false)
   .map(
-    ([path, priority, changefreq]) => `  <url>
-    <loc>${SITE_URL}${slashed(path)}</loc>
+    (p) => `  <url>
+    <loc>${SITE_URL}${slashed(p.path)}</loc>
     <lastmod>${today}</lastmod>
-    <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
+    <changefreq>${p.changefreq}</changefreq>
+    <priority>${p.priority}</priority>
   </url>`,
   )
   .join('\n')}
@@ -49,30 +106,5 @@ ${[...staticPages, ...hubs, ...landing]
 `;
 writeFileSync(join(dist, 'sitemap.xml'), sitemap);
 
-function setHead(html, page) {
-  const title = escape(page.title);
-  const description = escape(page.description);
-  const url = `${SITE_URL}${slashed(page.path)}`;
-  return html
-    .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
-    .replace(/(<meta\s+name="description"\s+content=")[^"]*(")/, `$1${description}$2`)
-    .replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/, `$1${url}$2`)
-    .replace(/(property="og:title"\s+content=")[^"]*(")/, `$1${title}$2`)
-    .replace(/(property="og:description"\s+content=")[^"]*(")/, `$1${description}$2`)
-    .replace(/(property="og:url"\s+content=")[^"]*(")/, `$1${url}$2`)
-    .replace(/(name="twitter:title"\s+content=")[^"]*(")/, `$1${title}$2`)
-    .replace(/(name="twitter:description"\s+content=")[^"]*(")/, `$1${description}$2`);
-}
-
-for (const page of [...hubPages, ...landingPages]) {
-  const dir = join(dist, page.path);
-  mkdirSync(dir, { recursive: true });
-  const html = setHead(template, page);
-  writeFileSync(join(dir, 'index.html'), html);
-  // Also emit /<route>.html: hosts that rewrite every extensionless path to
-  // the SPA shell (the catch-all in public/_redirects) still serve this
-  // file for the canonical no-trailing-slash URL.
-  writeFileSync(join(dist, `${page.path}.html`), html);
-}
-
-console.log(`postbuild: sitemap + ${hubPages.length + landingPages.length} prerendered heads`);
+rmSync(serverDir, { recursive: true, force: true });
+console.log(`postbuild: prerendered ${pages.length} routes + 404.html, wrote sitemap.xml`);
