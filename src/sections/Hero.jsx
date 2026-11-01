@@ -17,7 +17,7 @@ export default function Hero() {
         src="/images/hero-1376.webp"
         srcSet={HERO_SRCSET}
         sizes="100vw"
-        alt=""
+        alt="Black SUV car service waiting at Boston Logan Airport terminal"
         fetchPriority="high"
         decoding="async"
         className="absolute inset-0 w-full h-full object-cover object-center max-[600px]:object-[58%_center]"

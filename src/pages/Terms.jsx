@@ -27,7 +27,7 @@ export default function Terms() {
   ];
 
   return (
-    <main className="py-12 sm:py-16 bg-gray-50 min-h-screen">
+    <div className="py-12 sm:py-16 bg-gray-50 min-h-screen">
       <PageMeta
         title="Terms & Conditions | Dedham Airport Taxi & Livery"
         description="Review the booking, cancellation, payment, and privacy policies for Dedham Airport Taxi & Livery."
@@ -135,6 +135,6 @@ export default function Terms() {
         </div>
 
       </div>
-    </main>
+    </div>
   );
 }
