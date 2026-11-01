@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node node_modules/vite/bin/vite.js",
     "build": "node node_modules/vite/bin/vite.js build && node node_modules/vite/bin/vite.js build --ssr src/entry-server.jsx --outDir dist-server && node scripts/postbuild.mjs",
+    "check": "node scripts/check-dist.mjs",
     "preview": "node node_modules/vite/bin/vite.js preview"
   },
   "dependencies": {
