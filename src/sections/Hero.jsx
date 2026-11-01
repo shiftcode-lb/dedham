@@ -47,14 +47,14 @@ export default function Hero() {
         <div className="flex gap-4 items-center pt-4 max-[600px]:flex-col max-[600px]:w-full">
           <Link
             className={`${BTN_TEAL} max-[600px]:w-full`}
-            to="/contact"
+            to="/contact/"
           >
             Book a Ride
           </Link>
 
           <Link
             className={`${BTN_OUTLINE} max-[600px]:w-full`}
-            to="/services"
+            to="/services/"
           >
             Explore Our Services
           </Link>

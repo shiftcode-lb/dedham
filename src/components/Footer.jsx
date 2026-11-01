@@ -52,31 +52,31 @@ export default function Footer() {
               Home
             </NavLink>
 
-            <NavLink className={linkClasses} to="/about">
+            <NavLink className={linkClasses} to="/about/">
               About
             </NavLink>
 
-            <NavLink className={linkClasses} to="/services">
+            <NavLink className={linkClasses} to="/services/">
               Services
             </NavLink>
 
-            <NavLink className={linkClasses} to="/service-areas">
+            <NavLink className={linkClasses} to="/service-areas/">
               Service Areas
             </NavLink>
 
-            <NavLink className={linkClasses} to="/routes">
+            <NavLink className={linkClasses} to="/routes/">
               Airport Routes
             </NavLink>
 
-            <NavLink className={linkClasses} to="/contact">
+            <NavLink className={linkClasses} to="/contact/">
               Contact
             </NavLink>
 
-            <NavLink className={linkClasses} to="/safety">
+            <NavLink className={linkClasses} to="/safety/">
               Safety
             </NavLink>
 
-            <NavLink className={linkClasses} to="/terms">
+            <NavLink className={linkClasses} to="/terms/">
               Terms and Conditions
             </NavLink>
           </nav>

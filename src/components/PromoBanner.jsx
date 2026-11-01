@@ -27,7 +27,7 @@ function MarqueeTrack() {
 export default function PromoBanner() {
   return (
     <Link
-      to="/contact"
+      to="/contact/"
       aria-label={MESSAGE}
       className="relative z-[101] flex h-10 max-[600px]:h-9 items-center overflow-hidden bg-brown text-off-white"
     >

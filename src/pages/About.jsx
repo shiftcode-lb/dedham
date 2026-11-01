@@ -39,7 +39,7 @@ export default function About() {
               now and take 25% off on your first ride!
             </p>
 
-            <Link className={BTN_BROWN} to="/contact">
+            <Link className={BTN_BROWN} to="/contact/">
               Reserve a Vehicle
             </Link>
           </div>

@@ -37,7 +37,7 @@ export default function HubPage({ path }) {
           {hub.items.map((item) => (
             <li key={item.path}>
               <Link
-                to={item.path}
+                to={`${item.path}/`}
                 className="block border border-line rounded-xl bg-white p-5 hover:border-turquoise transition-colors"
               >
                 <span className="block text-[18px] font-semibold text-turquoise-dark mb-1">

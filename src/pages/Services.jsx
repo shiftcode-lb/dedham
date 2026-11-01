@@ -87,7 +87,7 @@ export default function Services() {
 
                 <Link
                   className="min-w-[190px] max-[1080px]:min-w-[185px] max-[600px]:min-w-[190px] min-h-[46px] max-[1080px]:min-h-[45px] max-[600px]:min-h-[46px] px-[22px] inline-flex items-center justify-center bg-[rgba(3,16,19,0.45)] border border-[#8fc7c5] rounded-[3px] text-[#b9e2e0] text-[10px] font-semibold tracking-[0.05em] backdrop-blur-[2px] transition-colors duration-200 hover:bg-[#2a7778] hover:border-[#2a7778] hover:text-white"
-                  to="/contact"
+                  to="/contact/"
                 >
                   {buttons[index]}
                 </Link>

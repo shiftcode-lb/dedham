@@ -48,7 +48,7 @@ export default function NotFound() {
             Go to Homepage
           </Link>
           <Link
-            to="/contact"
+            to="/contact/"
             className="inline-flex items-center justify-center rounded-lg text-[16px] px-8 py-4 border-[1.5px] border-[#137172] text-[#137172] hover:bg-[#137172] hover:text-white transition-colors"
           >
             Book a Ride

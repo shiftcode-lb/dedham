@@ -6,11 +6,11 @@ import { SITE_CONTAINER } from '../styles/container';
 
 const navItems = [
   ['HOME', '/'],
-  ['ABOUT', '/about'],
-  ['SERVICES', '/services'],
-  ['CONTACT', '/contact'],
-  ['SAFETY', '/safety'],
-  ['TERMS & CONDITIONS', '/terms'],
+  ['ABOUT', '/about/'],
+  ['SERVICES', '/services/'],
+  ['CONTACT', '/contact/'],
+  ['SAFETY', '/safety/'],
+  ['TERMS & CONDITIONS', '/terms/'],
 ];
 
 export default function Navbar() {
@@ -95,7 +95,7 @@ export default function Navbar() {
 
         <Link
           className="hidden hover:bg-[#1E5152] min-[1081px]:inline-flex items-center justify-center bg-turquoise text-white text-[11px] font-semibold tracking-[0.08em] py-[12px] px-[18px] rounded-lg whitespace-nowrap"
-          to="/contact"
+          to="/contact/"
         >
           BOOK NOW
         </Link>
@@ -145,7 +145,7 @@ export default function Navbar() {
 
       <Link
         className="mt-[22px] rounded-lg font-semibold bg-turquoise text-white text-center text-[11px] py-[13px] block"
-        to="/contact"
+        to="/contact/"
         onClick={() => setOpen(false)}
       >
         BOOK NOW

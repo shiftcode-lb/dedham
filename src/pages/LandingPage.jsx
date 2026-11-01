@@ -25,7 +25,7 @@ export default function LandingPage({ page }) {
           <nav aria-label="Breadcrumb" className="text-[13px] text-muted mb-6">
             <Link to="/" className="hover:text-turquoise">Home</Link>
             {' / '}
-            <Link to={page.parent.path} className="hover:text-turquoise">
+            <Link to={`${page.parent.path}/`} className="hover:text-turquoise">
               {page.parent.name}
             </Link>
             {' / '}
@@ -38,7 +38,7 @@ export default function LandingPage({ page }) {
           <p className="text-[17px] text-charcoal leading-[1.6] mb-8">{page.intro}</p>
 
           <div className="flex flex-wrap gap-4 mb-12">
-            <Link to="/contact" className={BTN_TEAL}>
+            <Link to="/contact/" className={BTN_TEAL}>
               Book a Ride
             </Link>
             <a
@@ -85,13 +85,13 @@ export default function LandingPage({ page }) {
           <ul className="flex flex-wrap gap-x-5 gap-y-2 text-[15px]">
             {siblings.map((item) => (
               <li key={item.path}>
-                <Link to={item.path} className="text-turquoise-dark underline hover:text-turquoise">
+                <Link to={`${item.path}/`} className="text-turquoise-dark underline hover:text-turquoise">
                   {item.breadcrumbName}
                 </Link>
               </li>
             ))}
             <li>
-              <Link to={page.parent.path} className="text-turquoise-dark underline hover:text-turquoise">
+              <Link to={`${page.parent.path}/`} className="text-turquoise-dark underline hover:text-turquoise">
                 All {page.parent.name.toLowerCase()}
               </Link>
             </li>

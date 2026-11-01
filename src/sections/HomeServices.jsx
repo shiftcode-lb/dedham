@@ -43,7 +43,7 @@ export default function HomeServices() {
                 </p>
 
                 <Link
-                  to="/services"
+                  to="/services/"
                   className="mt-auto pt-3 font-semibold text-[14px] text-turquoise-dark hover:underline"
                 >
                   Learn More →
